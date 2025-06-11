@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         try {
-          const response = await fetch("YOUR_BACKEND_URL/create-checkout", {
+          const response = await fetch("https://moneytalkspurchasing-g8g8gpd0gxebdhhv.centralus-01.azurewebsites.net/create-checkout", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
