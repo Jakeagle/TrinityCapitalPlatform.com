@@ -259,40 +259,78 @@
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Replace this with your actual Stripe public key
-  const stripe = Stripe("your-stripe-publishable-key");
+  // School License Order Summary Updater
+  const studentInput = document.getElementById("student-qty");
+  const teacherInput = document.getElementById("teacher-qty");
+  const summary = document.getElementById("order-summary");
+  const form = document.getElementById("school-license-form");
+  const purchaseButton = document.getElementById("purchase-button");
 
-  // Attach event listeners to the buy buttons
-  document.querySelectorAll(".btnTradeWinds").forEach((button) => {
-    button.addEventListener("click", async function () {
-      const priceId = this.dataset.priceId; // Attach price ID to each button in your HTML
-      const productName = this.dataset.productName; // Attach product name (optional)
+  if (studentInput && teacherInput && summary) {
+    function updateSummary() {
+      const s = parseInt(studentInput.value, 10) || 0;
+      const t = parseInt(teacherInput.value, 10) || 0;
+      const total = s * 5 + t * 20;
+      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} (${
+        s * 5
+      }) + ${t} Teacher License${t !== 1 ? "s" : ""} ($${
+        t * 20
+      }) = <strong>$${total}</strong>`;
+    }
 
-      try {
-        // Send request to backend to create a Stripe Checkout Session
-        const response = await fetch("/create-checkout-session", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            priceId: priceId,
-            productName: productName,
-          }),
-        });
+    studentInput.addEventListener("input", updateSummary);
+    teacherInput.addEventListener("input", updateSummary);
+    updateSummary();
 
-        if (!response.ok) {
-          throw new Error("Failed to create checkout session");
+    // Handle form submission
+    if (form && purchaseButton) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        purchaseButton.setAttribute("aria-busy", "true");
+        purchaseButton.disabled = true;
+
+        try {
+          const student_quantity = parseInt(studentInput.value, 10) || 0;
+          const teacher_quantity = parseInt(teacherInput.value, 10) || 0;
+
+          if (student_quantity === 0 && teacher_quantity === 0) {
+            throw new Error("Please select at least one license");
+          }
+
+          const response = await fetch(
+            "http://localhost:3001/create-checkout-session",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                student_quantity,
+                teacher_quantity,
+              }),
+            }
+          );
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(
+              errorData.error || "Failed to create checkout session"
+            );
+          }
+
+          const { url } = await response.json();
+          window.location.href = url;
+        } catch (error) {
+          console.error("Error:", error);
+          alert(
+            error.message ||
+              "There was a problem processing your request. Please try again."
+          );
+        } finally {
+          purchaseButton.setAttribute("aria-busy", "false");
+          purchaseButton.disabled = false;
         }
-
-        const { id } = await response.json();
-
-        // Redirect to Stripe Checkout
-        await stripe.redirectToCheckout({ sessionId: id });
-      } catch (error) {
-        console.error("Error initiating checkout:", error);
-        alert("An error occurred. Please try again.");
-      }
-    });
-  });
+      });
+    }
+  }
 });
