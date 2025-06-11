@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           const response = await fetch(
-            "http://localhost:3001/create-checkout-session",
+            "https://moneytalkspurchasing-g8g8gpd0gxebdhhv.centralus-01.azurewebsites.net/create-checkout-session",
             {
               method: "POST",
               headers: {
