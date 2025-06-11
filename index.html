@@ -35,12 +35,17 @@
     />
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
+    <!-- Stripe Integration -->
+    <script src="https://js.stripe.com/v3/" async defer></script>
+    <script>
+      if (typeof Stripe === 'undefined') {
+        console.warn('Stripe is not loaded yet. Waiting for script to load...');
+      }
+      window.stripeLocale = 'en';
+    </script>
+
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
-
-    <script async
-    src="https://js.stripe.com/v3/buy-button.js">
-  </script>
 
     <!-- =======================================================
   * Template Name: BizLand
@@ -474,123 +479,71 @@
       <section id="pricing" class="pricing section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2>Pricing</h2>
+          <h2>School Licensing</h2>
           <p>
-            <span>Check our</span>
-            <span class="description-title">Pricing</span>
+            <span>Purchase</span>
+            <span class="description-title">Student &amp; Teacher Licenses</span>
           </p>
         </div>
         <!-- End Section Title -->
-      
-        <div class="container">
-          <div class="row gy-3 justify-content-center">
-            <div
-              class="col-lg-4"
-              data-aos="fade-up"
-              data-aos-delay="100"
-            >
-              <div class="pricing-item">
-                <h3>Free</h3>
-                <h4><sup>$</sup>0<span> / month</span></h4>
-                <ul>
-                  <li>Acess to Demo</li>
-                  <li>Simulated bill and payment timeframes</li>
-                  <li>Simplified UI</li>
-                  <li>5 sample lessons</li>
-                  <li>Completed in 45 minutes</li>
-                </ul>
-                <div class="btn-wrap">
-                  <stripe-buy-button
-  buy-button-id="buy_btn_1Qbn7eJfl0mMUIOaUFVB9Rs3"
-  publishable-key="pk_test_51OyDknJfl0mMUIOaSuvZbxbAzT86dvu3FQiA2SHbhtLi7q9skPEIcCK03nQpIRdS9CuRRjBy8cs34hptUKE5c1Cd002INXTUa7"
->
-</stripe-buy-button>
-                </div>
-              </div>
-            </div>
-            <!-- End Pricing Item -->
-      
-            <div
-              class="col-lg-4"
-              data-aos="fade-up"
-              data-aos-delay="200"
-            >
-              <div class="pricing-item">
-                <h3>Standard</h3>
-                <h4><sup>$</sup>10.99<span> / month</span></h4>
-                <ul>
-                  <li>Full app</li>
-                  <li>Realistic banking simulation</li>
-                  <li>Modern UI</li>
-                  <li>Regular updates</li>
-                  <li>Runs forever</li>
-                </ul>
-                <div class="btn-wrap">
-                  
-                  <stripe-buy-button
-                  buy-button-id="buy_btn_1QjlisJfl0mMUIOavSnRHv1S"
-                  publishable-key="pk_live_51OyDknJfl0mMUIOarBURK8PePeAy9aDrgit5ZDxlD6KtkZRgjVyTQz2XGgygK17PVHBv3c3kcjJUENMYrA0Gpd7g00M4xwq2ob"
-                >
-                </stripe-buy-button>
 
-                </div>
-              </div>
-            </div>
-            <!-- End Pricing Item -->
-      
-            <div
-              class="col-lg-4"
-              data-aos="fade-up"
-              data-aos-delay="300"
-            >
+        <div class="container">
+          <form id="school-license-form" class="row gy-3 justify-content-center">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-item">
-                <span class="advanced">Advanced</span>
-                <h3>Ultimate</h3>
-                <h4><sup>$</sup>15.99<span> / month</span></h4>
+                <h3>Student License</h3>
+                <h4><sup>$</sup>5<span> / student</span></h4>
                 <ul>
-                  <li>Lifetime Access</li>
-                  <li>Priority updates</li>
-                  <li>1 month YouTube channel membership</li>
-                  <li>Dedicated Discord Server</li>
-                  <li>All other features</li>
+                  <li>Full app access for students</li>
+                  <li>Classroom management tools</li>
+                  <li>Access to all lessons</li>
                 </ul>
-                <div class="btn-wrap">
-                  <stripe-buy-button
-  buy-button-id="buy_btn_1QjlhmJfl0mMUIOa2fQaNC5I"
-  publishable-key="pk_live_51OyDknJfl0mMUIOarBURK8PePeAy9aDrgit5ZDxlD6KtkZRgjVyTQz2XGgygK17PVHBv3c3kcjJUENMYrA0Gpd7g00M4xwq2ob"
->
-</stripe-buy-button>
+                <div class="mb-3">
+                  <label for="student-qty" class="form-label">Number of Student Licenses</label>
+                  <input type="number" id="student-qty" name="student_qty" class="form-control" min="1" value="10" required>
                 </div>
               </div>
             </div>
-            <!-- End Pricing Item -->
-            <div
-            class="col-lg-4"
-            data-aos="fade-up"
-            data-aos-delay="300"
-          >
-            <div class="pricing-item">
-              <span class="advanced">Advanced</span>
-              <h3>Ultimate</h3>
-              <h4><sup>$</sup>25.99<span> / month</span></h4>
-              <ul>
-                <li>Lifetime Access</li>
-                <li>Priority updates</li>
-                <li>1 month YouTube channel membership</li>
-                <li>Dedicated Discord Server</li>
-                <li>Priority on new lessons</li>
-              </ul>
-              <div class="btn-wrap">
-                <stripe-buy-button
-  buy-button-id="buy_btn_1QjleSJfl0mMUIOa6HYTbsj3"
-  publishable-key="pk_live_51OyDknJfl0mMUIOarBURK8PePeAy9aDrgit5ZDxlD6KtkZRgjVyTQz2XGgygK17PVHBv3c3kcjJUENMYrA0Gpd7g00M4xwq2ob"
->
-</stripe-buy-button>
+            <!-- End Student License -->
+
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="pricing-item">
+                <h3>Teacher License</h3>
+                <h4><sup>$</sup>20<span> / teacher</span></h4>
+                <ul>
+                  <li>Full app access for teachers</li>
+                  <li>Admin dashboard</li>
+                  <li>Priority support</li>
+                </ul>
+                <div class="mb-3">
+                  <label for="teacher-qty" class="form-label">Number of Teacher Licenses</label>
+                  <input type="number" id="teacher-qty" name="teacher_qty" class="form-control" min="1" value="1" required>
+                </div>
               </div>
             </div>
-          </div>
-             
-          </div>
+            <!-- End Teacher License -->
+
+            <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
+              <div class="pricing-item">
+                <h3>Order Summary</h3>
+                <p id="order-summary">
+                  <!-- JS will update this -->
+                  10 Student Licenses ($50) + 1 Teacher License ($20) = <strong>$70</strong>
+                </p>
+                <button 
+                  type="submit" 
+                  class="btn btn-primary"
+                  id="purchase-button"
+                  role="button"
+                  tabindex="0">
+                  Purchase Licenses
+                </button>
+                <p class="mt-3">
+                  For bulk orders or custom needs, <a href="#contact">contact us</a>.
+                </p>
+              </div>
+            </div>
+          </form>
         </div>
       </section>
       
