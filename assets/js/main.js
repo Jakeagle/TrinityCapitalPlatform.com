@@ -303,7 +303,7 @@ document.addEventListener("DOMContentLoaded", function () {
           console.log("Sending request with:", { student_quantity, teacher_quantity });
 
           const response = await fetch(
-            "https://moneytalkspurchasing-g8g8gpd0gxebdhhv.centralus-01.azurewebsites.net/create-checkout-session",
+            "https://moneytalkspurchasing-2-bkftf2deeyexc3c0.eastus-01.azurewebsites.net/create-checkout-session",
             {
               method: "POST",
               headers: {
