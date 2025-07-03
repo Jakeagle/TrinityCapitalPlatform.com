@@ -340,13 +340,13 @@ document.addEventListener("DOMContentLoaded", function () {
   if (privacyBtn) {
     privacyBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      window.open("/privacy-policy", "_blank");
+      window.open("https://tcpurchasingserver-production.up.railway.app/privacy-policy", "_blank");
     });
   }
   if (termsBtn) {
     termsBtn.addEventListener("click", function (e) {
       e.preventDefault();
-      window.open("/terms-of-service", "_blank");
+      window.open("https://tcpurchasingserver-production.up.railway.app/terms-of-service", "_blank");
     });
   }
 });
