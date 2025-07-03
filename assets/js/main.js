@@ -258,8 +258,6 @@
   document.addEventListener("scroll", navmenuScrollspy);
 })();
 
-// Replace the form submission section in your main.js with this improved version:
-
 document.addEventListener("DOMContentLoaded", function () {
   // School License Order Summary Updater
   const studentInput = document.getElementById("student-qty");
@@ -273,7 +271,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const s = parseInt(studentInput.value, 10) || 0;
       const t = parseInt(teacherInput.value, 10) || 0;
       const total = s * 5 + t * 20;
-      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} ($${
+      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} (${
         s * 5
       }) + ${t} Teacher License${t !== 1 ? "s" : ""} ($${
         t * 20
@@ -290,7 +288,6 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
         purchaseButton.setAttribute("aria-busy", "true");
         purchaseButton.disabled = true;
-        purchaseButton.textContent = "Processing...";
 
         try {
           const student_quantity = parseInt(studentInput.value, 10) || 0;
@@ -300,15 +297,12 @@ document.addEventListener("DOMContentLoaded", function () {
             throw new Error("Please select at least one license");
           }
 
-          console.log("Sending request with:", { student_quantity, teacher_quantity });
-
           const response = await fetch(
             "https://tcpurchasingserver-production.up.railway.app/create-checkout-session",
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json",
               },
               body: JSON.stringify({
                 student_quantity,
@@ -317,52 +311,42 @@ document.addEventListener("DOMContentLoaded", function () {
             }
           );
 
-          console.log("Response status:", response.status);
-          console.log("Response headers:", response.headers);
-
-          // Check if response is actually JSON
-          const contentType = response.headers.get('content-type');
-          if (!contentType || !contentType.includes('application/json')) {
-            const textResponse = await response.text();
-            console.error("Non-JSON response received:", textResponse);
-            throw new Error(`Server returned ${response.status}: ${textResponse.substring(0, 100)}...`);
-          }
-
           if (!response.ok) {
             const errorData = await response.json();
             throw new Error(
-              errorData.error || `Server error: ${response.status}`
+              errorData.error || "Failed to create checkout session"
             );
           }
 
-          const data = await response.json();
-          console.log("Success response:", data);
-          
-          if (!data.url) {
-            throw new Error("No checkout URL received from server");
-          }
-
-          window.location.href = data.url;
+          const { url } = await response.json();
+          window.location.href = url;
         } catch (error) {
-          console.error("Detailed error:", error);
-          
-          let errorMessage = "There was a problem processing your request. Please try again.";
-          
-          if (error.message.includes("fetch")) {
-            errorMessage = "Unable to connect to the server. Please check your internet connection and try again.";
-          } else if (error.message.includes("404")) {
-            errorMessage = "The checkout service is currently unavailable. Please try again later.";
-          } else if (error.message) {
-            errorMessage = error.message;
-          }
-
-          alert(errorMessage);
+          console.error("Error:", error);
+          alert(
+            error.message ||
+              "There was a problem processing your request. Please try again."
+          );
         } finally {
           purchaseButton.setAttribute("aria-busy", "false");
           purchaseButton.disabled = false;
-          purchaseButton.textContent = "Purchase Licenses";
         }
       });
     }
+  }
+
+  // Privacy Policy and Terms of Service button handlers
+  const privacyBtn = document.getElementById("privacy-btn");
+  const termsBtn = document.getElementById("terms-btn");
+  if (privacyBtn) {
+    privacyBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.open("/privacy-policy", "_blank");
+    });
+  }
+  if (termsBtn) {
+    termsBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      window.open("/terms-of-service", "_blank");
+    });
   }
 });
