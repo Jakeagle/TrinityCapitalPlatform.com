@@ -12,9 +12,10 @@
 --------------------------------------------------------------*/
 /* Fonts */
 :root {
-  --default-font: "Roboto", system-ui, -apple-system, "Segoe UI", Roboto,
-    "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --default-font:
+    "Roboto", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji",
+    "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --heading-font: "Montserrat", sans-serif;
   --nav-font: "Open Sans", sans-serif;
 }
@@ -476,6 +477,117 @@ h6 {
   font-size: 14px;
   padding-bottom: 50px;
   position: relative;
+}
+
+/*--------------------------------------------------------------
+# Quote Dialog
+--------------------------------------------------------------*/
+#quotes-dialog {
+  border: none;
+  border-radius: 0.75rem; /* 12px rounded corners */
+  width: 70vw;
+  height: auto; /* Let height adjust to content */
+  box-shadow: 0 4px 25px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+
+#quotes-dialog[open] {
+  display: flex;
+  flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  #quotes-dialog {
+    width: 95vw;
+    height: auto;
+  }
+}
+
+.dialog-body {
+  flex-grow: 1; /* Allow body to take up available space */
+  overflow-y: auto;
+}
+
+.dialog-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  gap: 2rem;
+}
+
+@media (max-width: 992px) {
+  .dialog-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.quote-details h4,
+.quote-form h4 {
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+}
+
+.quote-item,
+.quote-total {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.75rem;
+}
+
+.quote-price {
+  font-weight: 500;
+}
+
+.quote-details hr {
+  margin: 1rem 0;
+}
+
+.quote-form .form-group {
+  margin-bottom: 1rem;
+}
+
+.quote-form .form-group label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+
+.quote-form .form-control {
+  width: 100%;
+}
+
+.dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.dialog-header .close-btn {
+  background: none;
+  border: none;
+  font-size: 2.5rem;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+  color: #888;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem; /* 12px */
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+  border-top: 1px solid #eee;
 }
 
 .footer .footer-newsletter {
@@ -1960,6 +2072,3 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
-  /* Add your styles here */
-}
