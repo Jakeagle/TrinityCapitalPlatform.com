@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           const response = await fetch(
-            "https://tcpurchasingserver-production.up.railway.app/create-checkout-session",
+            "http://localhost:3001/create-checkout-session",
             {
               method: "POST",
               headers: {
@@ -348,5 +348,227 @@ document.addEventListener("DOMContentLoaded", function () {
       e.preventDefault();
       window.open("terms-of-service.html", "_blank");
     });
+  }
+
+  // Request a Quote button handler
+  const requestQuoteBtn = document.getElementById("request-quote-btn");
+  const quoteDialog = document.getElementById("quotes-dialog");
+  const closeQuoteDialogBtn = document.getElementById("close-quote-dialog-btn");
+
+  if (requestQuoteBtn && quoteDialog) {
+    requestQuoteBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Populate quote details from the main form
+      const studentQty =
+        parseInt(document.getElementById("student-qty").value, 10) || 0;
+      const teacherQty =
+        parseInt(document.getElementById("teacher-qty").value, 10) || 0;
+      const studentTotal = studentQty * 5;
+      const teacherTotal = teacherQty * 20;
+      const grandTotal = studentTotal + teacherTotal;
+
+      document.getElementById("quote-student-qty").textContent = studentQty;
+      document.getElementById("quote-student-total").textContent =
+        `$${studentTotal}`;
+
+      document.getElementById("quote-teacher-qty").textContent = teacherQty;
+      document.getElementById("quote-teacher-total").textContent =
+        `$${teacherTotal}`;
+
+      document.getElementById("quote-grand-total").textContent =
+        `$${grandTotal}`;
+
+      quoteDialog.showModal();
+    });
+  }
+
+  if (closeQuoteDialogBtn && quoteDialog) {
+    closeQuoteDialogBtn.addEventListener("click", () => {
+      quoteDialog.close();
+    });
+  }
+
+  // Close dialog on backdrop click
+  if (quoteDialog) {
+    quoteDialog.addEventListener("click", (e) => {
+      if (e.target === quoteDialog) {
+        quoteDialog.close();
+      }
+    });
+  }
+
+  // PDF Creation Handler
+  const downloadPdfBtn = document.getElementById("download-quote-pdf-btn");
+
+  async function handlePdfCreation() {
+    // 1. Validate form before proceeding
+    const form = document.getElementById("quote-info-form");
+    if (!form.checkValidity()) {
+      alert(
+        "Please fill out all required school information fields before downloading the PDF."
+      );
+      form.reportValidity(); // Shows browser's validation UI on the invalid fields
+      return;
+    }
+
+    // 2. Check for jsPDF and autoTable plugin
+    if (
+      typeof window.jspdf === "undefined" ||
+      typeof window.jspdf.jsPDF === "undefined"
+    ) {
+      console.error(
+        "The base jsPDF library is not loaded. Check the script tags in index.html."
+      );
+      alert(
+        "Error: The base PDF library (jsPDF) is not loaded. Please check your internet connection and try a hard refresh (Ctrl+F5)."
+      );
+      return;
+    }
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    // With modern jsPDF and autoTable, the plugin attaches to the instance, not the prototype.
+    // So, we check for the function on the created `doc` instance.
+    if (typeof doc.autoTable !== "function") {
+      console.error(
+        "The jsPDF-AutoTable plugin is not loaded. Check the script tags in index.html."
+      );
+      alert(
+        "Error: The PDF table plugin (jsPDF-AutoTable) is not loaded. Please check your internet connection and try a hard refresh (Ctrl+F5)."
+      );
+      return;
+    }
+
+    // 3. Gather data from the dialog
+    const adminName = document.getElementById("admin-name").value;
+    const districtName = document.getElementById("district-name").value;
+    const schoolName = document.getElementById("school-name").value;
+    const schoolAddress = document.getElementById("school-address").value;
+
+    const studentQty = document.getElementById("quote-student-qty").textContent;
+    const studentTotal = document.getElementById(
+      "quote-student-total"
+    ).textContent;
+    const teacherQty = document.getElementById("quote-teacher-qty").textContent;
+    const teacherTotal = document.getElementById(
+      "quote-teacher-total"
+    ).textContent;
+    const grandTotal = document.getElementById("quote-grand-total").textContent;
+
+    // 4. Helper to load image and convert to Base64
+    const getBase64Image = (url) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          const dataURL = canvas.toDataURL("image/png");
+          resolve({
+            dataURL: dataURL,
+            width: img.width,
+            height: img.height,
+          });
+        };
+        img.onerror = (err) =>
+          reject(new Error("Failed to load image for PDF."));
+        img.src = url;
+      });
+    };
+
+    try {
+      // --- PDF Header ---
+      const logoUrl = "assets/img/FSSLogoPDF.png";
+      const logoInfo = await getBase64Image(logoUrl);
+      const logoWidth = 50;
+      const logoHeight = (logoInfo.height * logoWidth) / logoInfo.width;
+      doc.addImage(logoInfo.dataURL, "PNG", 15, 12, logoWidth, logoHeight);
+
+      doc.setFontSize(26);
+      doc.setFont("helvetica", "bold");
+      doc.text("Quote", 148, 25);
+
+      const today = new Date();
+      const quoteDate = today.toLocaleDateString();
+      const quoteId = `QUOTE-${today.toISOString().slice(0, 10).replace(/-/g, "")}`;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Date: ${quoteDate}`, 148, 32);
+      doc.text(`Quote ID: ${quoteId}`, 148, 37);
+      doc.text(`Quote for: ${adminName}`, 15, 40);
+
+      // --- School Info ---
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("School Information", 15, 55);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `District: ${districtName}\nSchool: ${schoolName}\nAddress: ${schoolAddress}`,
+        15,
+        62
+      );
+
+      // --- Company Info ---
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Vendor Information", 135, 55); // Aligned with "Quote" header
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("FERGUSON SOFTWARE SOLUTIONS, LLC", 135, 62);
+      doc.text("Email: trinitycapitalsim@gmail.com", 135, 67);
+      doc.text("Phone: (682) 239-1209", 135, 72);
+      doc.text("Tax ID: 99-1043982", 135, 77);
+      // --- Line Items Table ---
+      doc.autoTable({
+        startY: 85,
+        head: [["Item Description", "Quantity", "Unit Price", "Total"]],
+        body: [
+          ["Student License", studentQty, "$5.00", studentTotal],
+          ["Teacher License", teacherQty, "$20.00", teacherTotal],
+        ],
+        theme: "striped",
+        headStyles: { fillColor: [44, 62, 80] },
+      });
+
+      // --- Totals ---
+      const finalY = doc.lastAutoTable.finalY;
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Total:", 148, finalY + 15);
+      doc.text(grandTotal, 175, finalY + 15);
+
+      // --- Notes / Terms ---
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `• This quote is valid for 30 days from the issue date.\n` +
+          `• Licenses are valid for 12 months from activation.\n` +
+          `• Payment accepted via Purchase Order, ACH, or Check.\n` +
+          `• For assistance, please contact trinitycapitalsim@gmail.com.`,
+        15,
+        finalY + 30
+      );
+
+      // --- Save PDF ---
+      doc.save(
+        `Quote-${schoolName.replace(/\s/g, "_")}-${today.toISOString().slice(0, 10)}.pdf`
+      );
+    } catch (error) {
+      console.error("Error generating PDF:", error);
+      alert(
+        "Could not generate the PDF. This may be due to a network issue or browser restrictions. Please try again."
+      );
+    }
+  }
+
+  if (downloadPdfBtn) {
+    downloadPdfBtn.addEventListener("click", handlePdfCreation);
   }
 });
