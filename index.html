@@ -37,12 +37,28 @@
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
     <!-- Stripe Integration -->
-    <script src="https://js.stripe.com/v3/" defer></script>
+   <script>
+  // Only load Stripe when payment is actually needed
+  function loadStripe() {
+    return new Promise((resolve) => {
+      if (window.Stripe) {
+        resolve(window.Stripe);
+        return;
+      }
+      
+      const script = document.createElement('script');
+      script.src = 'https://js.stripe.com/v3/';
+      script.onload = () => resolve(window.Stripe);
+      document.head.appendChild(script);
+    });
+  }
+  
+  // Call this function when you need Stripe (e.g., on payment button click)
+  window.initStripe = loadStripe;
+</script>
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
-
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com https://m.stripe.network https://m.stripe.com; frame-src https://js.stripe.com https://m.stripe.network; connect-src 'self' https://api.stripe.com https://m.stripe.network https://m.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
 
     <!-- =======================================================
   * Template Name: BizLand
