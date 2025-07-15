@@ -6,6 +6,7 @@
     <title>About Trinity Capital</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;">
     
 
     <!-- Favicons -->
@@ -691,7 +692,7 @@
 
             <div class="col-lg-7">
               <form
-                action="forms/contact.php"
+                action="https://info.trinity-capital.net/forms/contact.php"
                 method="post"
                 class="php-email-form"
                 data-aos="fade-up"
@@ -877,6 +878,28 @@
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
+    
+    <!-- Debug Script for HTTPS Issues -->
+    <script>
+      // Check for mixed content issues
+      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
+        console.warn('Site is not served over HTTPS');
+      }
+      
+      // Log any network errors
+      window.addEventListener('securitypolicyviolation', function(e) {
+        console.error('CSP Violation:', e.violatedDirective, e.blockedURI);
+      });
+      
+      // Check for insecure requests
+      const originalFetch = window.fetch;
+      window.fetch = function(url, options) {
+        if (typeof url === 'string' && url.startsWith('http://') && location.protocol === 'https:') {
+          console.error('Mixed content detected: HTTP request from HTTPS page:', url);
+        }
+        return originalFetch.apply(this, arguments);
+      };
+    </script>
   </body>
 
   <dialog id="quotes-dialog">
