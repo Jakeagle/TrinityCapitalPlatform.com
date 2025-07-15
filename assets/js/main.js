@@ -298,7 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           const response = await fetch(
-            "http://localhost:3001/create-checkout-session",
+            "https://tcpurchasingserver-production.up.railway.app/create-checkout-session",
             {
               method: "POST",
               headers: {
@@ -779,7 +779,7 @@ document.addEventListener("DOMContentLoaded", function () {
         quoteDate,
       };
       // Send to server as JSON
-      const response = await fetch("http://localhost:3001/send-quote-email", {
+      const response = await fetch("https://tcpurchasingserver-production.up.railway.app/send-quote-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
