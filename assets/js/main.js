@@ -400,6 +400,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // PDF Creation Handler
   const downloadPdfBtn = document.getElementById("download-quote-pdf-btn");
+  const emailQuoteBtn = document.getElementById("email-quote-btn"); // New button
 
   async function handlePdfCreation() {
     // 1. Validate form before proceeding
@@ -570,5 +571,269 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (downloadPdfBtn) {
     downloadPdfBtn.addEventListener("click", handlePdfCreation);
+  }
+
+  // Email Quote Handler
+  async function handleEmailQuote() {
+    // Get the email button for UI updates
+    const emailButton = document.getElementById("email-quote-btn");
+    const originalButtonText = emailButton
+      ? emailButton.textContent
+      : "Email Quote";
+
+    // Show spinner and disable button
+    if (emailButton) {
+      emailButton.innerHTML = '<span class="spinner"></span> Please wait...';
+      emailButton.disabled = true;
+      emailButton.style.opacity = "0.7";
+    }
+
+    // Validate form before proceeding
+    const form = document.getElementById("quote-info-form");
+    if (!form.checkValidity()) {
+      // Reset button on validation failure
+      if (emailButton) {
+        emailButton.innerHTML = originalButtonText;
+        emailButton.disabled = false;
+        emailButton.style.opacity = "1";
+      }
+      alert(
+        "Please fill out all required school information fields before emailing the quote."
+      );
+      form.reportValidity();
+      return;
+    }
+
+    // Check for jsPDF and autoTable plugin
+    if (
+      typeof window.jspdf === "undefined" ||
+      typeof window.jspdf.jsPDF === "undefined"
+    ) {
+      alert(
+        "Error: The base PDF library (jsPDF) is not loaded. Please check your internet connection and try a hard refresh (Ctrl+F5)."
+      );
+      return;
+    }
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    if (typeof doc.autoTable !== "function") {
+      alert(
+        "Error: The PDF table plugin (jsPDF-AutoTable) is not loaded. Please check your internet connection and try a hard refresh (Ctrl+F5)."
+      );
+      return;
+    }
+
+    // Gather data from the dialog
+    const adminName = document.getElementById("admin-name").value;
+    const districtName = document.getElementById("district-name").value;
+    const schoolName = document.getElementById("school-name").value;
+    const schoolAddress = document.getElementById("school-address").value;
+    // Use admin email as recipient
+    const adminEmailInput = document.getElementById("admin-email");
+    if (!adminEmailInput) {
+      alert(
+        "Error: The administrator email field is missing from the form. Please add an input with id='admin-email'."
+      );
+      return;
+    }
+    const recipientEmail = adminEmailInput.value;
+
+    const studentQty = document.getElementById("quote-student-qty").textContent;
+    const studentTotal = document.getElementById(
+      "quote-student-total"
+    ).textContent;
+    const teacherQty = document.getElementById("quote-teacher-qty").textContent;
+    const teacherTotal = document.getElementById(
+      "quote-teacher-total"
+    ).textContent;
+    const grandTotal = document.getElementById("quote-grand-total").textContent;
+
+    // Helper to load image and convert to Base64
+    const getBase64Image = (url) => {
+      return new Promise((resolve, reject) => {
+        const img = new Image();
+        img.crossOrigin = "Anonymous";
+        img.onload = () => {
+          const canvas = document.createElement("canvas");
+          canvas.width = img.width;
+          canvas.height = img.height;
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(img, 0, 0);
+          const dataURL = canvas.toDataURL("image/png");
+          resolve({
+            dataURL: dataURL,
+            width: img.width,
+            height: img.height,
+          });
+        };
+        img.onerror = (err) =>
+          reject(new Error("Failed to load image for PDF."));
+        img.src = url;
+      });
+    };
+
+    try {
+      // --- PDF Header ---
+      const logoUrl = "assets/img/FSSLogoPDF.png";
+      const logoInfo = await getBase64Image(logoUrl);
+      const logoWidth = 50;
+      const logoHeight = (logoInfo.height * logoWidth) / logoInfo.width;
+      doc.addImage(logoInfo.dataURL, "PNG", 15, 12, logoWidth, logoHeight);
+
+      doc.setFontSize(26);
+      doc.setFont("helvetica", "bold");
+      doc.text("Quote", 148, 25);
+
+      const today = new Date();
+      const quoteDate = today.toLocaleDateString();
+      const quoteId = `QUOTE-${today.toISOString().slice(0, 10).replace(/-/g, "")}`;
+
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(`Date: ${quoteDate}`, 148, 32);
+      doc.text(`Quote ID: ${quoteId}`, 148, 37);
+      doc.text(`Quote for: ${adminName}`, 15, 40);
+
+      // --- School Info ---
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("School Information", 15, 55);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `District: ${districtName}\nSchool: ${schoolName}\nAddress: ${schoolAddress}`,
+        15,
+        62
+      );
+
+      // --- Company Info ---
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Vendor Information", 135, 55);
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text("FERGUSON SOFTWARE SOLUTIONS, LLC", 135, 62);
+      doc.text("Email: trinitycapitalsim@gmail.com", 135, 67);
+      doc.text("Phone: (682) 239-1209", 135, 72);
+      doc.text("Tax ID: 99-1043982", 135, 77);
+      // --- Line Items Table ---
+      doc.autoTable({
+        startY: 85,
+        head: [["Item Description", "Quantity", "Unit Price", "Total"]],
+        body: [
+          ["Student License", studentQty, "$5.00", studentTotal],
+          ["Teacher License", teacherQty, "$20.00", teacherTotal],
+        ],
+        theme: "striped",
+        headStyles: { fillColor: [44, 62, 80] },
+      });
+
+      // --- Totals ---
+      const finalY = doc.lastAutoTable.finalY;
+      doc.setFontSize(12);
+      doc.setFont("helvetica", "bold");
+      doc.text("Total:", 148, finalY + 15);
+      doc.text(grandTotal, 175, finalY + 15);
+
+      // --- Notes / Terms ---
+      doc.setFontSize(10);
+      doc.setFont("helvetica", "normal");
+      doc.text(
+        `• This quote is valid for 30 days from the issue date.\n` +
+          `• Licenses are valid for 12 months from activation.\n` +
+          `• Payment accepted via Purchase Order, ACH, or Check.\n` +
+          `• For assistance, please contact trinitycapitalsim@gmail.com.`,
+        15,
+        finalY + 30
+      );
+
+      // --- Get PDF as base64 string ---
+      const pdfBlob = doc.output("blob");
+      const filename = `Quote-${schoolName.replace(/\s/g, "_")}-${today.toISOString().slice(0, 10)}.pdf`;
+      // Convert Blob to base64 string
+      const pdfBase64 = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+          // Remove the data:application/pdf;base64, prefix
+          const base64 = reader.result.split(",")[1];
+          resolve(base64);
+        };
+        reader.onerror = reject;
+        reader.readAsDataURL(pdfBlob);
+      });
+      // Prepare JSON payload
+      const payload = {
+        pdfBase64,
+        pdfFilename: filename,
+        recipientEmail,
+        adminName,
+        districtName,
+        schoolName,
+        schoolAddress,
+        studentQty,
+        teacherQty,
+        studentTotal,
+        teacherTotal,
+        grandTotal,
+        quoteId,
+        quoteDate,
+      };
+      // Send to server as JSON
+      const response = await fetch("http://localhost:3001/send-quote-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!response.ok) {
+        let errorMessage = "Failed to send quote email";
+        try {
+          const errorData = await response.json();
+          errorMessage = errorData.error || errorMessage;
+        } catch (e) {
+          // Not JSON, fallback to status text
+          errorMessage = response.statusText || errorMessage;
+        }
+        throw new Error(errorMessage);
+      }
+
+      // Show success message
+      if (emailButton) {
+        emailButton.innerHTML = "✓ Successful";
+        emailButton.style.backgroundColor = "#28a745";
+        emailButton.style.color = "white";
+
+        // Reset button after 3 seconds
+        setTimeout(() => {
+          emailButton.innerHTML = originalButtonText;
+          emailButton.disabled = false;
+          emailButton.style.opacity = "1";
+          emailButton.style.backgroundColor = "";
+          emailButton.style.color = "";
+        }, 3000);
+      }
+
+      alert("Quote PDF emailed successfully!");
+    } catch (error) {
+      console.error("Error emailing PDF:", error);
+
+      // Reset button on error
+      if (emailButton) {
+        emailButton.innerHTML = originalButtonText;
+        emailButton.disabled = false;
+        emailButton.style.opacity = "1";
+      }
+
+      alert(
+        error.message ||
+          "Could not email the PDF. This may be due to a network issue or browser restrictions. Please try again."
+      );
+    } finally {
+      const loadingBar = document.getElementById("email-loading-bar");
+      if (loadingBar) loadingBar.style.display = "none";
+    }
+  }
+
+  if (emailQuoteBtn) {
+    emailQuoteBtn.addEventListener("click", handleEmailQuote);
   }
 });
