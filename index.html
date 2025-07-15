@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -6,12 +6,13 @@
     <title>About Trinity Capital</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
+    
 
     <!-- Favicons -->
     <link href="assets/img/favicon-32x32.png" rel="icon" />
     <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
 
-    <!-- Fonts - Updated to use HTTPS -->
+    <!-- Fonts -->
     <link href="https://fonts.googleapis.com" rel="preconnect" />
     <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin />
     <link
@@ -35,36 +36,37 @@
     />
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-    <!-- Stripe Integration - Fixed to load securely -->
-    <script>
-      // Only load Stripe when payment is actually needed
-      function loadStripe() {
-        return new Promise((resolve, reject) => {
-          if (window.Stripe) {
-            resolve(window.Stripe);
-            return;
-          }
-
-          const script = document.createElement("script");
-          script.src = "https://js.stripe.com/v3/";
-          script.onload = () => resolve(window.Stripe);
-          script.onerror = () => reject(new Error("Failed to load Stripe"));
-          document.head.appendChild(script);
-        });
+    <!-- Stripe Integration -->
+   <script>
+  // Only load Stripe when payment is actually needed
+  function loadStripe() {
+    return new Promise((resolve) => {
+      if (window.Stripe) {
+        resolve(window.Stripe);
+        return;
       }
-
-      // Call this function when you need Stripe (e.g., on payment button click)
-      window.initStripe = loadStripe;
-    </script>
+      
+      const script = document.createElement('script');
+      script.src = 'https://js.stripe.com/v3/';
+      script.onload = () => resolve(window.Stripe);
+      document.head.appendChild(script);
+    });
+  }
+  
+  // Call this function when you need Stripe (e.g., on payment button click)
+  window.initStripe = loadStripe;
+</script>
 
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
 
-    <!-- Content Security Policy -->
-    <meta
-      http-equiv="Content-Security-Policy"
-      content="default-src 'self'; script-src 'self' 'unsafe-inline' https://js.stripe.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self' https://api.stripe.com;"
-    />
+    <!-- =======================================================
+  * Template Name: BizLand
+  * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
+  * Updated: Aug 07 2024 with Bootstrap v5.3.3
+  * Author: BootstrapMade.com
+  * License: https://bootstrapmade.com/license/
+  ======================================================== -->
   </head>
 
   <body class="index-page">
@@ -75,7 +77,7 @@
         >
           <div class="contact-info d-flex align-items-center">
             <i class="bi bi-envelope d-flex align-items-center"
-              ><a href="mailto:trinitycapitalsim@gmail.com"
+              ><a href="mailto:contact@example.com"
                 >trinitycapitalsim@gmail.com</a
               ></i
             >
@@ -93,11 +95,13 @@
       </div>
       <!-- End Top Bar -->
 
-      <div class="branding d-flex align-items-center">
+      <div class="branding d-flex align-items-cente">
         <div
           class="container position-relative d-flex align-items-center justify-content-between"
         >
           <a href="index.html" class="logo d-flex align-items-center">
+            <!-- Uncomment the line below if you also wish to use an image logo -->
+            <!-- <img src="assets/img/logo.png" alt=""> -->
             <h1 class="sitename">Trinity Capital</h1>
           </a>
 
@@ -105,7 +109,9 @@
             <ul>
               <li><a href="#hero" class="active">Home</a></li>
               <li><a href="#about">About</a></li>
+
               <li><a href="#team">Team</a></li>
+
               <li><a href="#contact">Contact</a></li>
             </ul>
             <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -127,7 +133,9 @@
               <p>Our mission? Give users control over their finances</p>
               <div class="d-flex">
                 <a href="#about" class="btn-get-started">Get Started</a>
-                <a href="#" class="btn-watch-video d-flex align-items-center"
+                <a
+                  href="https://www.youtube.com/watch?v=Y7f98aduVJ8"
+                  class="glightbox btn-watch-video d-flex align-items-center"
                   ><i class="bi bi-play-circle"></i><span>Watch Video</span></a
                 >
               </div>
@@ -135,6 +143,7 @@
           </div>
         </div>
       </section>
+      <!-- /Hero Section -->
 
       <!-- Featured Services Section -->
       <section id="featured-services" class="featured-services section">
@@ -147,13 +156,14 @@
             >
               <div class="service-item position-relative">
                 <div class="icon"><i class="bi bi-activity icon"></i></div>
-                <h4><a href="#" class="stretched-link">Accessibility</a></h4>
+                <h4><a href="" class="stretched-link">Accesibility</a></h4>
                 <p>
                   Trinity Capital can be used on any device with an internet
                   connection at any time
                 </p>
               </div>
             </div>
+            <!-- End Service Item -->
 
             <div
               class="col-xl-3 col-md-6 d-flex"
@@ -164,13 +174,13 @@
                 <div class="icon">
                   <i class="bi bi-bounding-box-circles icon"></i>
                 </div>
-                <h4><a href="#" class="stretched-link">Versatility</a></h4>
+                <h4><a href="" class="stretched-link">Versatility</a></h4>
                 <p>
-                  Trinity Capital can be used for tracking, planning, and
-                  simulating your finances all in one place.
+                  Trinity Capital can be used for tracking, planning, and simulating your finances all in one place.
                 </p>
               </div>
             </div>
+            <!-- End Service Item -->
 
             <div
               class="col-xl-3 col-md-6 d-flex"
@@ -182,15 +192,14 @@
                   <i class="bi bi-calendar4-week icon"></i>
                 </div>
                 <h4>
-                  <a href="#" class="stretched-link">Realistic Experience</a>
+                  <a href="" class="stretched-link">Realistic Experience</a>
                 </h4>
                 <p>
-                  Trinity Capital offers a realistic banking experience to
-                  users, allowing them to practice their financial skills in a
-                  realistic and safe environment
+                  Trinity Capital offers a realistic banking experience to users, allowing them to practice their financial skills in a realistic and safe environment
                 </p>
               </div>
             </div>
+            <!-- End Service Item -->
 
             <div
               class="col-xl-3 col-md-6 d-flex"
@@ -199,24 +208,21 @@
             >
               <div class="service-item position-relative">
                 <div class="icon"><i class="bi bi-broadcast icon"></i></div>
-                <h4>
-                  <a href="#" class="stretched-link"
-                    >Sandbox financial environment</a
-                  >
-                </h4>
+                <h4><a href="" class="stretched-link">Sandbox financial environment</a></h4>
                 <p>
-                  Trinity Capital offers a sandbox environment, allowing users
-                  to experiment with their finances without any real world
-                  consequences.
+                  Trinity Capital offers a sandbox environment, allowing users to experiment with their finances without any real world consequences. 
                 </p>
               </div>
             </div>
+            <!-- End Service Item -->
           </div>
         </div>
       </section>
+      <!-- /Featured Services Section -->
 
       <!-- About Section -->
       <section id="about" class="about section light-background">
+        <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
           <h2>About</h2>
           <p>
@@ -224,15 +230,12 @@
             <span class="description-title">About Us</span>
           </p>
         </div>
-
+        <!-- End Section Title -->
+        ````````````````
         <div class="container">
           <div class="row gy-3">
             <div class="col-lg-6" data-aos="fade-up" data-aos-delay="100">
-              <img
-                src="assets/img/about.jpg"
-                alt="About Trinity Capital"
-                class="img-fluid"
-              />
+              <img src="assets/img/about.jpg" alt="" class="img-fluid" />
             </div>
 
             <div
@@ -243,11 +246,7 @@
               <div class="about-content ps-0 ps-lg-3">
                 <h3>Simulate. Experiment. Master Your Finances.</h3>
                 <p class="fst-italic">
-                  Trinity Capital as a whole provides a unique and effective way
-                  to learn about personal finance. Our app is designed to be
-                  used by anyone, regardless of age or experience. We believe
-                  that everyone should have access to the tools they need to
-                  succeed financially, and we are here to provide that.
+                  Trinity Capital as a whole provides a unique and effective way to learn about personal finance. Our app is designed to be used by anyone, regardless of age or experience. We believe that everyone should have access to the tools they need to succeed financially, and we are here to provide that.
                 </p>
                 <ul>
                   <li>
@@ -266,31 +265,384 @@
                   <li>
                     <i class="bi bi-fullscreen-exit"></i>
                     <div>
-                      <h4>Effective knowledge transfer, learn by doing</h4>
+                      <h4>
+                       Effective knwoledge transfer, learn by doing
+                      </h4>
                       <p>
-                        Trinity Capital prides itself on its learn by doing
-                        approach, allowing users to learn and practice their
-                        financial skills through experimentation, trial and
-                        error. The lessons users learn through doing are more
-                        likely to stick with them than if they were to read a
-                        book or watch a video.
+                        Trinity Capital prides itself on its learn by doing approach, allowing users to learn and practice their financial skills through experimentation, trial and error. The lessons users learn through doing are more likely to stick with them than if they were to read a book or watch a video.
                       </p>
                     </div>
                   </li>
                 </ul>
                 <p>
-                  With these in mind, Trinity Capital establishes itself as the
-                  premier financial literacy tool for anyone looking to learn
-                  more about personal finance.
+                  With these in mind, Trinity Capital establishes itself as the premier financial literacy tool for anyone looking to learn more about personal finance. 
                 </p>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <!-- /About Section -->
+
+      <!-- Skills Section -->
+      <!--  -->
+      <!-- /Skills Section -->
+
+      <!-- Stats Section -->
+
+      <!-- /Stats Section -->
+
+      <!-- Clients Section -->
+
+      <!-- /Clients Section -->
+
+      <!-- Services Section -->
+      <section id="services" class="services section">
+       
+      <!-- /Services Section -->
+
+      <!-- Testimonials Section -->
+      <section id="testimonials" class="testimonials section dark-background">
+        <img
+          src="assets/img/testimonials-bg.jpg"
+          class="testimonials-bg"
+          alt=""
+        />
+
+        <div class="container" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper init-swiper">
+            <script type="application/json" class="swiper-config">
+              {
+                "loop": true,
+                "speed": 600,
+                "autoplay": {
+                  "delay": 5000
+                },
+                "slidesPerView": "auto",
+                "pagination": {
+                  "el": ".swiper-pagination",
+                  "type": "bullets",
+                  "clickable": true
+                }
+              }
+            </script>
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <img
+                    src="assets/img/testimonials/testimonials-1.jpg"
+                    class="testimonial-img"
+                    alt=""
+                  />
+                  <h3>Jake Ferguson</h3>
+                  <h4>Founder &amp; Lead Developer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    <span
+                      >Everyone who has seen and used the app has noted on how useful and intiutive it is. Ive gotten many comments from people around my age telling me, "Why didnt we have this in high school?" and it makes me proud. I hope many more feel the same way, and learn something using this app</span
+                    >
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+              <!-- End testimonial item -->
+
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <img
+                    src="assets/img/testimonials/testimonials-2.jpg"
+                    class="testimonial-img"
+                    alt=""
+                  />
+                  <h3>Sara Wilsson</h3>
+                  <h4>Designer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    <span
+                      >Export tempor illum tamen malis malis eram quae irure
+                      esse labore quem cillum quid cillum eram malis quorum
+                      velit fore eram velit sunt aliqua noster fugiat irure amet
+                      legam anim culpa.</span
+                    >
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+              <!-- End testimonial item -->
+
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <img
+                    src="assets/img/testimonials/testimonials-3.jpg"
+                    class="testimonial-img"
+                    alt=""
+                  />
+                  <h3>Jena Karlis</h3>
+                  <h4>Store Owner</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    <span
+                      >Enim nisi quem export duis labore cillum quae magna enim
+                      sint quorum nulla quem veniam duis minim tempor labore
+                      quem eram duis noster aute amet eram fore quis sint
+                      minim.</span
+                    >
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+              <!-- End testimonial item -->
+
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <img
+                    src="assets/img/testimonials/testimonials-4.jpg"
+                    class="testimonial-img"
+                    alt=""
+                  />
+                  <h3>Matt Brandon</h3>
+                  <h4>Freelancer</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    <span
+                      >Fugiat enim eram quae cillum dolore dolor amet nulla
+                      culpa multos export minim fugiat minim velit minim dolor
+                      enim duis veniam ipsum anim magna sunt elit fore quem
+                      dolore labore illum veniam.</span
+                    >
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+              <!-- End testimonial item -->
+
+              <div class="swiper-slide">
+                <div class="testimonial-item">
+                  <img
+                    src="assets/img/testimonials/testimonials-5.jpg"
+                    class="testimonial-img"
+                    alt=""
+                  />
+                  <h3>John Larson</h3>
+                  <h4>Entrepreneur</h4>
+                  <div class="stars">
+                    <i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i
+                    ><i class="bi bi-star-fill"></i>
+                  </div>
+                  <p>
+                    <i class="bi bi-quote quote-icon-left"></i>
+                    <span
+                      >Quis quorum aliqua sint quem legam fore sunt eram irure
+                      aliqua veniam tempor noster veniam enim culpa labore duis
+                      sunt culpa nulla illum cillum fugiat legam esse veniam
+                      culpa fore nisi cillum quid.</span
+                    >
+                    <i class="bi bi-quote quote-icon-right"></i>
+                  </p>
+                </div>
+              </div>
+              <!-- End testimonial item -->
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+        </div>
+      </section>
+      <!-- /Testimonials Section -->
+
+      <!-- Portfolio Section -->
+     
+      <!-- /Portfolio Section -->
+
+      <!-- Team Section -->
+      
+      <!-- /Team Section -->
+
+      <!-- Pricing Section -->
+      <section id="pricing" class="pricing section">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>School Licensing</h2>
+          <p>
+            <span>Purchase</span>
+            <span class="description-title">Student &amp; Teacher Licenses</span>
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container">
+          <form id="school-license-form" class="row gy-3 justify-content-center">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+              <div class="pricing-item">
+                <h3>Student License</h3>
+                <h4><sup>$</sup>5<span> / student</span></h4>
+                <ul>
+                  <li>Full app access for students</li>
+                  <li>Classroom management tools</li>
+                  <li>Access to all lessons</li>
+                </ul>
+                <div class="mb-3">
+                  <label for="student-qty" class="form-label">Number of Student Licenses</label>
+                  <input type="number" id="student-qty" name="student_qty" class="form-control" min="1" value="10" required>
+                </div>
+              </div>
+            </div>
+            <!-- End Student License -->
+
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+              <div class="pricing-item">
+                <h3>Teacher License</h3>
+                <h4><sup>$</sup>20<span> / teacher</span></h4>
+                <ul>
+                  <li>Full app access for teachers</li>
+                  <li>Admin dashboard</li>
+                  <li>Priority support</li>
+                </ul>
+                <div class="mb-3">
+                  <label for="teacher-qty" class="form-label">Number of Teacher Licenses</label>
+                  <input type="number" id="teacher-qty" name="teacher_qty" class="form-control" min="1" value="1" required>
+                </div>
+              </div>
+            </div>
+            <!-- End Teacher License -->
+
+            <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
+              <div class="pricing-item">
+                <h3>Order Summary</h3>
+                <p id="order-summary">
+                  <!-- JS will update this -->
+                  10 Student Licenses ($50) + 1 Teacher License ($20) = <strong>$70</strong>
+                </p>
+                <button 
+                  type="submit" 
+                  class="btn btn-primary"
+                  id="purchase-button"
+                  role="button"
+                  tabindex="0">
+                  Purchase Licenses
+                </button>
+                <div class="mt-4 pt-4 border-top">
+                  <h5 class="fw-bold">
+                    💼 Paying with a Purchase Order?
+                  </h5>
+                  <p>
+                    We’re an approved vendor in multiple Texas school districts.
+                    <br />Click below to request a formal quote or custom
+                    invoice.
+                  </p>
+                  <p class="mt-2"><small>📄 Includes W-9, pricing breakdown, and payment terms.</small></p>
+                  <a href="#contact" id="request-quote-btn" class="btn btn-secondary mt-2" role="button">
+                    Request a Quote
+                  </a>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </section>
+      
+      <!-- /Pricing Section -->
+
+      <!-- Faq Section -->
+      <section id="faq" class="faq section light-background">
+        <!-- Section Title -->
+        <div class="container section-title" data-aos="fade-up">
+          <h2>F.A.Q</h2>
+          <p>
+            <span>Frequently Asked</span>
+            <span class="description-title">Questions</span>
+          </p>
+        </div>
+        <!-- End Section Title -->
+
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10" data-aos="fade-up" data-aos-delay="100">
+              <div class="faq-container">
+                <div class="faq-item faq-active">
+                  <h3>Do bills and payments appear at realistic times? </h3>
+                  <div class="faq-content">
+                    <p>
+                      Yes they do! Trinity Capital is built to provide the most realistic experience as possible. That means when you submit a bill or a paycheck in the simulation, it hits your account when youd expect it to.
+                    </p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div>
+                <!-- End Faq item-->
+
+               
+
+                <div class="faq-item">
+                  <h3>
+                   Will there be lessons included in the app?
+                  </h3>
+                  <div class="faq-content">
+                    <p>
+                      Yes there will be! We are working hard to transform Trinity Capital into a full fledged financial literacy tool. We are working on lessons that will teach users about the basics of personal finance, and how to apply them in the real world.
+                    </p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div>
+                <!-- End Faq item-->
+
+                <div class="faq-item">
+                  <h3>
+                    What the heck is the demo? And why does it look so different from the paid app?
+                  </h3>
+                  <div class="faq-content">
+                    <p>
+                     The demo was initially built to show public schools what apps like Trinity Capital can do. But now, I am releasing it to the public so they can try out Trinity Capital for free. As for the look? We had to simplify the demo to make it usable in a classroom setting. We'll get around to updating it here soon.
+                    </p>
+                  </div>
+                  <i class="faq-toggle bi bi-chevron-right"></i>
+                </div>
+                <!-- End Faq item-->
+
+               
+                <!-- End Faq item-->
+
+                
+              </div>
+            </div>
+            <!-- End Faq Column-->
+          </div>
+        </div>
+      </section>
+      <!-- /Faq Section -->
 
       <!-- Contact Section -->
       <section id="contact" class="contact section">
+        <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
           <h2>Contact</h2>
           <p>
@@ -298,6 +650,7 @@
             <span class="description-title">Contact Us</span>
           </p>
         </div>
+        <!-- End Section Title -->
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="row gy-4">
@@ -311,9 +664,13 @@
                   <i class="bi bi-geo-alt flex-shrink-0"></i>
                   <div>
                     <h3>Address</h3>
-                    <p>123 Sesame St, New York City, NY 11111</p>
+                    <p>123 Sesame st, New York City, NY 11111</p>
                   </div>
                 </div>
+                <!-- End Info Item -->
+
+               
+                <!-- End Info Item -->
 
                 <div
                   class="info-item d-flex"
@@ -326,13 +683,17 @@
                     <p>trinitycapitalsim@gmail.com</p>
                   </div>
                 </div>
+                <!-- End Info Item -->
+
+               
               </div>
             </div>
 
             <div class="col-lg-7">
               <form
+                action="forms/contact.php"
                 method="post"
-                class="contact-form"
+                class="php-email-form"
                 data-aos="fade-up"
                 data-aos-delay="200"
               >
@@ -344,7 +705,7 @@
                       name="name"
                       id="name-field"
                       class="form-control"
-                      required
+                      required=""
                     />
                   </div>
 
@@ -355,7 +716,7 @@
                       class="form-control"
                       name="email"
                       id="email-field"
-                      required
+                      required=""
                     />
                   </div>
 
@@ -366,7 +727,7 @@
                       class="form-control"
                       name="subject"
                       id="subject-field"
-                      required
+                      required=""
                     />
                   </div>
 
@@ -377,22 +738,38 @@
                       name="message"
                       rows="10"
                       id="message-field"
-                      required
+                      required=""
                     ></textarea>
                   </div>
 
                   <div class="col-md-12 text-center">
+                    <div class="loading">Loading</div>
+                    <div class="error-message"></div>
+                    <div class="sent-message">
+                      Your message has been sent. Thank you!
+                    </div>
+
                     <button type="submit">Send Message</button>
                   </div>
                 </div>
               </form>
             </div>
+            <!-- End Contact Form -->
           </div>
         </div>
       </section>
+      <!-- /Contact Section -->
     </main>
 
     <footer id="footer" class="footer">
+      <div class="footer-newsletter">
+        <div class="container">
+          <div class="row justify-content-center text-center">
+            
+          </div>
+        </div>
+      </div>
+
       <div class="container footer-top">
         <div class="row gy-4">
           <div class="col-lg-4 col-md-6 footer-about">
@@ -402,9 +779,8 @@
             <div class="footer-contact pt-3">
               <p>123 Sesame St.</p>
               <p>New York City, NY 11111</p>
-              <p>
-                <strong>Email:</strong> <span>trinitycapitalsim@gmail.com</span>
-              </p>
+              
+              <p><strong>Email:</strong> <span>trinitycapitalsim@gmail.com</span></p>
             </div>
           </div>
 
@@ -419,12 +795,10 @@
                 <i class="bi bi-chevron-right"></i> <a href="#">Services</a>
               </li>
               <li>
-                <i class="bi bi-chevron-right"></i>
-                <a href="terms-of-service.html">Terms of Service</a>
+                <i class="bi bi-chevron-right"></i> <a id="terms-btn" href="terms-of-service.html">Terms of Service</a>
               </li>
               <li>
-                <i class="bi bi-chevron-right"></i>
-                <a href="privacy-policy.html">Privacy Policy</a>
+                <i class="bi bi-chevron-right"></i> <a id="privacy-btn" href="privacy-policy.html">Privacy Policy</a>
               </li>
             </ul>
           </div>
@@ -432,14 +806,13 @@
           <div class="col-lg-4 col-md-12">
             <h4>Follow Us</h4>
             <p>
-              Check out our YouTube channel for more information on Trinity
-              Capital
+             Check out our YouTube channel for more information on Trinity Capital, and other 
             </p>
             <div class="social-links d-flex">
-              <a href="#"><i class="bi bi-twitter-x"></i></a>
-              <a href="#"><i class="bi bi-facebook"></i></a>
-              <a href="#"><i class="bi bi-instagram"></i></a>
-              <a href="#"><i class="bi bi-linkedin"></i></a>
+              <a href=""><i class="bi bi-twitter-x"></i></a>
+              <a href=""><i class="bi bi-facebook"></i></a>
+              <a href=""><i class="bi bi-instagram"></i></a>
+              <a href=""><i class="bi bi-linkedin"></i></a>
             </div>
           </div>
         </div>
@@ -448,37 +821,102 @@
       <div class="container copyright text-center mt-4">
         <p>
           © <span>Copyright</span>
-          <strong class="px-1 sitename"
-            >FERGUSON SOFTWARE SOLUTIONS, LLC</strong
-          >
+          <strong class="px-1 sitename">FERGUSON SOFTWARE SOLUTIONS, LLC</strong>
           <span>All Rights Reserved</span>
         </p>
+        <div class="credits">
+          <!-- All the links in the footer should remain intact. -->
+          <!-- You can delete the links only if you've purchased the pro version. -->
+          <!-- Licensing information: https://bootstrapmade.com/license/ -->
+          <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
+          Designed by
+          <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by
+          <a href=“https://themewagon.com>ThemeWagon
+        </div>
       </div>
     </footer>
 
-    <!-- Basic JavaScript for functionality -->
-    <script>
-      // Basic form handling
-      document
-        .querySelector(".contact-form")
-        .addEventListener("submit", function (e) {
-          e.preventDefault();
-          alert("Thank you for your message! We will get back to you soon.");
-          this.reset();
-        });
+    <!-- Scroll Top -->
+    <a
+      href="#"
+      id="scroll-top"
+      class="scroll-top d-flex align-items-center justify-content-center"
+      ><i class="bi bi-arrow-up-short"></i
+    ></a>
 
-      // Smooth scrolling for navigation links
-      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-        anchor.addEventListener("click", function (e) {
-          e.preventDefault();
-          const target = document.querySelector(this.getAttribute("href"));
-          if (target) {
-            target.scrollIntoView({
-              behavior: "smooth",
-            });
-          }
-        });
-      });
+    <!-- Preloader -->
+    <div id="preloader">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+
+    <!-- Vendor JS Files -->
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/php-email-form/validate.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/waypoints/noframework.waypoints.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <script src="assets/vendor/imagesloaded/imagesloaded.pkgd.min.js"></script>
+    <script src="assets/vendor/isotope-layout/isotope.pkgd.min.js"></script>
+
+    <!-- jsPDF library -->
+    <script src="assets/vendor/jspdf/jspdf.umd.min.js"></script>
+    <!--
+      Compatibility shim for jsPDF v2.x and older plugins.
+      The UMD build of jsPDF v2+ exposes a global 'jspdf' namespace object,
+      but many plugins expect a global 'jsPDF' constructor. This creates it.
+    -->
+    <script>
+      window.jsPDF = window.jspdf.jsPDF;
     </script>
+    <script src="assets/vendor/jspdf/jspdf.plugin.autotable.min.js"></script>
+
+    <!-- Main JS File -->
+    <script src="assets/js/main.js"></script>
   </body>
+
+  <dialog id="quotes-dialog">
+    <div class="dialog-header">
+      <h2>Request a Quote</h2>
+      <button id="close-quote-dialog-btn" class="close-btn" aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <div class="dialog-grid">
+        <div class="quote-details">
+          <h4>Quote Summary</h4>
+          <div class="quote-item">
+            <div><span id="quote-student-qty">10</span> Student Licenses</div>
+            <span class="quote-price" id="quote-student-total">$50</span>
+          </div>
+          <div class="quote-item">
+            <div><span id="quote-teacher-qty">1</span> Teacher Licenses</div>
+            <span class="quote-price" id="quote-teacher-total">$20</span>
+          </div>
+          <hr>
+          <div class="quote-total">
+            <strong>Total</strong>
+            <strong class="quote-price" id="quote-grand-total">$70</strong>
+          </div>
+        </div>
+        <div class="quote-form">
+          <h4>School Information</h4>
+          <form id="quote-info-form">
+            <div class="form-group"><label for="admin-name">Administrator Name</label><input type="text" id="admin-name" class="form-control" required></div>
+            <div class="form-group"><label for="admin-email">Administrator Email</label><input type="email" id="admin-email" class="form-control" required></div>
+            <div class="form-group"><label for="district-name">District Name</label><input type="text" id="district-name" class="form-control" required></div>
+            <div class="form-group"><label for="school-name">School Name</label><input type="text" id="school-name" class="form-control" required></div>
+            <div class="form-group"><label for="school-address">School Address</label><textarea id="school-address" class="form-control" rows="3" required></textarea></div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" id="download-quote-pdf-btn" class="btn btn-secondary">Download PDF</button>
+      <button type="button" id="email-quote-btn" class="btn btn-primary">Email Quote</button>
+    </div>
+  </dialog>
 </html>
