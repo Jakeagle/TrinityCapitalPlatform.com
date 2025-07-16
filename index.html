@@ -6,7 +6,7 @@
     <title>About Trinity Capital</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https:; style-src 'self' 'unsafe-inline' https:; img-src 'self' data: https:; font-src 'self' https:; connect-src 'self' https:;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; style-src 'self' 'unsafe-inline' https: data:; img-src 'self' data: https: blob:; font-src 'self' https: data:; connect-src 'self' https: wss:; media-src 'self' https: data:; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'none'; upgrade-insecure-requests;">
     
 
     <!-- Favicons -->
@@ -883,22 +883,52 @@
     <script>
       // Check for mixed content issues
       if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-        console.warn('Site is not served over HTTPS');
+        console.warn('⚠️ Site is not served over HTTPS');
+      } else {
+        console.log('✅ Site is served over HTTPS');
       }
       
       // Log any network errors
       window.addEventListener('securitypolicyviolation', function(e) {
-        console.error('CSP Violation:', e.violatedDirective, e.blockedURI);
+        console.error('🚫 CSP Violation:', e.violatedDirective, e.blockedURI);
       });
       
-      // Check for insecure requests
+      // Check for insecure requests and auto-upgrade them
       const originalFetch = window.fetch;
       window.fetch = function(url, options) {
         if (typeof url === 'string' && url.startsWith('http://') && location.protocol === 'https:') {
-          console.error('Mixed content detected: HTTP request from HTTPS page:', url);
+          console.warn('🔧 Auto-upgrading HTTP request to HTTPS:', url);
+          url = url.replace('http://', 'https://');
         }
         return originalFetch.apply(this, arguments);
       };
+      
+      // Also patch XMLHttpRequest
+      const originalOpen = XMLHttpRequest.prototype.open;
+      XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
+        if (typeof url === 'string' && url.startsWith('http://') && location.protocol === 'https:') {
+          console.warn('🔧 Auto-upgrading XMLHttpRequest to HTTPS:', url);
+          url = url.replace('http://', 'https://');
+        }
+        return originalOpen.call(this, method, url, async, user, password);
+      };
+      
+      // Check for mixed content in images, scripts, etc.
+      window.addEventListener('load', function() {
+        const allElements = document.querySelectorAll('*');
+        allElements.forEach(el => {
+          ['src', 'href', 'action'].forEach(attr => {
+            const value = el.getAttribute(attr);
+            if (value && value.startsWith('http://') && location.protocol === 'https:') {
+              console.warn('🔧 Found HTTP resource, auto-upgrading:', value);
+              el.setAttribute(attr, value.replace('http://', 'https://'));
+            }
+          });
+        });
+      });
+      
+      // Report successful HTTPS
+      console.log('🔒 HTTPS Security Check Complete');
     </script>
   </body>
 
