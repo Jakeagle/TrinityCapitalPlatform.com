@@ -605,7 +605,7 @@ document.addEventListener("DOMContentLoaded", function () {
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
       doc.text("FERGUSON SOFTWARE SOLUTIONS, LLC", 135, 62);
-      doc.text("Email: trinitycapitalsim@gmail.com", 135, 67);
+      doc.text("Email: jakobferguson@trinity-capital.net", 135, 67);
       doc.text("Phone: (682) 239-1209", 135, 72);
       doc.text("Tax ID: 99-1043982", 135, 77);
       // --- Line Items Table ---
@@ -634,7 +634,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `• This quote is valid for 30 days from the issue date.\n` +
           `• Licenses are valid for 12 months from activation.\n` +
           `• Payment accepted via Purchase Order, ACH, or Check.\n` +
-          `• For assistance, please contact trinitycapitalsim@gmail.com.`,
+          `• For assistance, please contact jakobferguson@trinity-capital.net.`,
         15,
         finalY + 30
       );
@@ -795,7 +795,7 @@ document.addEventListener("DOMContentLoaded", function () {
       doc.setFontSize(10);
       doc.setFont("helvetica", "normal");
       doc.text("FERGUSON SOFTWARE SOLUTIONS, LLC", 135, 62);
-      doc.text("Email: trinitycapitalsim@gmail.com", 135, 67);
+      doc.text("Email: jakobferguson@trinity-capital.net", 135, 67);
       doc.text("Phone: (682) 239-1209", 135, 72);
       doc.text("Tax ID: 99-1043982", 135, 77);
       // --- Line Items Table ---
@@ -824,7 +824,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `• This quote is valid for 30 days from the issue date.\n` +
           `• Licenses are valid for 12 months from activation.\n` +
           `• Payment accepted via Purchase Order, ACH, or Check.\n` +
-          `• For assistance, please contact trinitycapitalsim@gmail.com.`,
+          `• For assistance, please contact jakobferguson@trinity-capital.net.`,
         15,
         finalY + 30
       );
