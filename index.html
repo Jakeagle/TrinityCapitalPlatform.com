@@ -6,7 +6,7 @@
     <title>About Trinity Capital</title>
     <meta name="description" content="" />
     <meta name="keywords" content="" />
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; style-src 'self' 'unsafe-inline' https: data:; img-src 'self' data: https: blob:; font-src 'self' https: data:; connect-src 'self' https: wss:; media-src 'self' https: data:; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'none'; upgrade-insecure-requests;">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https: data:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data:; style-src 'self' 'unsafe-inline' https: data:; img-src 'self' data: https: blob:; font-src 'self' https: data:; connect-src 'self' https: wss: http://localhost:* http://127.0.0.1:*; media-src 'self' https: data:; object-src 'none'; base-uri 'self'; form-action 'self' https:; frame-ancestors 'none'; upgrade-insecure-requests;">
     
 
     <!-- Favicons -->
@@ -37,29 +37,64 @@
     />
     <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
 
-    <!-- Stripe Integration -->
-   <script>
-  // Only load Stripe when payment is actually needed
-  function loadStripe() {
-    return new Promise((resolve) => {
-      if (window.Stripe) {
-        resolve(window.Stripe);
-        return;
-      }
-      
-      const script = document.createElement('script');
-      script.src = 'https://js.stripe.com/v3/';
-      script.onload = () => resolve(window.Stripe);
-      document.head.appendChild(script);
-    });
-  }
-  
-  // Call this function when you need Stripe (e.g., on payment button click)
-  window.initStripe = loadStripe;
-</script>
-
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
+
+    <!-- Custom CSS for Bulk Pricing -->
+    <style>
+      .pricing-item.featured {
+        position: relative;
+        border: 3px solid #28a745;
+        transform: scale(1.05);
+        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+      }
+      
+      .popular-badge {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: linear-gradient(45deg, #28a745, #1e7e34);
+        color: white;
+        padding: 8px 20px;
+        border-radius: 20px;
+        font-size: 14px;
+        font-weight: bold;
+        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        z-index: 10;
+      }
+      
+      .pricing-item.featured h3 {
+        color: #000000;
+        font-weight: bold;
+      }
+      
+      .pricing-item.featured h4 {
+        color: #000000;
+      }
+      
+      .pricing-item.featured ul li strong {
+        color: #000000;
+      }
+      
+      @media (max-width: 768px) {
+        .pricing-item.featured {
+          transform: none;
+          margin-top: 30px;
+        }
+      }
+      
+      @media (max-width: 991px) {
+        .col-lg-3 {
+          margin-bottom: 30px;
+        }
+        
+        .pricing-item {
+          height: auto;
+          min-height: 400px;
+        }
+      }
+    </style>
 
     <!-- =======================================================
   * Template Name: BizLand
@@ -312,21 +347,6 @@
 
         <div class="container" data-aos="fade-up" data-aos-delay="100">
           <div class="swiper init-swiper">
-            <script type="application/json" class="swiper-config">
-              {
-                "loop": true,
-                "speed": 600,
-                "autoplay": {
-                  "delay": 5000
-                },
-                "slidesPerView": "auto",
-                "pagination": {
-                  "el": ".swiper-pagination",
-                  "type": "bullets",
-                  "clickable": true
-                }
-              }
-            </script>
             <div class="swiper-wrapper">
               <div class="swiper-slide">
                 <div class="testimonial-item">
@@ -503,10 +523,10 @@
 
         <div class="container">
           <form id="school-license-form" class="row gy-3 justify-content-center">
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-item">
                 <h3>Student License</h3>
-                <h4><sup>$</sup>5<span> / student</span></h4>
+                <h4><sup>$</sup>15<span> / student</span></h4>
                 <ul>
                   <li>Full app access for students</li>
                   <li>Classroom management tools</li>
@@ -520,10 +540,10 @@
             </div>
             <!-- End Student License -->
 
-            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="200">
               <div class="pricing-item">
                 <h3>Teacher License</h3>
-                <h4><sup>$</sup>20<span> / teacher</span></h4>
+                <h4><sup>$</sup>60<span> / teacher</span></h4>
                 <ul>
                   <li>Full app access for teachers</li>
                   <li>Admin dashboard</li>
@@ -537,12 +557,30 @@
             </div>
             <!-- End Teacher License -->
 
+            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="250">
+              <div class="pricing-item featured">
+                <h3>School-Wide License</h3>
+                <h4><sup>$</sup>20,000<span> / school</span></h4>
+                <ul>
+                  <li><strong>Unlimited</strong> student licenses</li>
+                  <li><strong>Unlimited</strong> teacher licenses</li>
+                </ul>
+                <button 
+                  type="button" 
+                  class="btn btn-primary w-100"
+                  id="bulk-quote-button">
+                  Request Quote
+                </button>
+              </div>
+            </div>
+            <!-- End Bulk License -->
+
             <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
               <div class="pricing-item">
                 <h3>Order Summary</h3>
                 <p id="order-summary">
                   <!-- JS will update this -->
-                  10 Student Licenses ($50) + 1 Teacher License ($20) = <strong>$70</strong>
+                  10 Student Licenses ($150) + 1 Teacher License ($60) = <strong>$210</strong>
                 </p>
                 <button 
                   type="submit" 
@@ -866,70 +904,10 @@
 
     <!-- jsPDF library -->
     <script src="assets/vendor/jspdf/jspdf.umd.min.js"></script>
-    <!--
-      Compatibility shim for jsPDF v2.x and older plugins.
-      The UMD build of jsPDF v2+ exposes a global 'jspdf' namespace object,
-      but many plugins expect a global 'jsPDF' constructor. This creates it.
-    -->
-    <script>
-      window.jsPDF = window.jspdf.jsPDF;
-    </script>
     <script src="assets/vendor/jspdf/jspdf.plugin.autotable.min.js"></script>
 
     <!-- Main JS File -->
     <script src="assets/js/main.js"></script>
-    
-    <!-- Debug Script for HTTPS Issues -->
-    <script>
-      // Check for mixed content issues
-      if (location.protocol !== 'https:' && location.hostname !== 'localhost') {
-        console.warn('⚠️ Site is not served over HTTPS');
-      } else {
-        console.log('✅ Site is served over HTTPS');
-      }
-      
-      // Log any network errors
-      window.addEventListener('securitypolicyviolation', function(e) {
-        console.error('🚫 CSP Violation:', e.violatedDirective, e.blockedURI);
-      });
-      
-      // Check for insecure requests and auto-upgrade them
-      const originalFetch = window.fetch;
-      window.fetch = function(url, options) {
-        if (typeof url === 'string' && url.startsWith('http://') && location.protocol === 'https:') {
-          console.warn('🔧 Auto-upgrading HTTP request to HTTPS:', url);
-          url = url.replace('http://', 'https://');
-        }
-        return originalFetch.apply(this, arguments);
-      };
-      
-      // Also patch XMLHttpRequest
-      const originalOpen = XMLHttpRequest.prototype.open;
-      XMLHttpRequest.prototype.open = function(method, url, async, user, password) {
-        if (typeof url === 'string' && url.startsWith('http://') && location.protocol === 'https:') {
-          console.warn('🔧 Auto-upgrading XMLHttpRequest to HTTPS:', url);
-          url = url.replace('http://', 'https://');
-        }
-        return originalOpen.call(this, method, url, async, user, password);
-      };
-      
-      // Check for mixed content in images, scripts, etc.
-      window.addEventListener('load', function() {
-        const allElements = document.querySelectorAll('*');
-        allElements.forEach(el => {
-          ['src', 'href', 'action'].forEach(attr => {
-            const value = el.getAttribute(attr);
-            if (value && value.startsWith('http://') && location.protocol === 'https:') {
-              console.warn('🔧 Found HTTP resource, auto-upgrading:', value);
-              el.setAttribute(attr, value.replace('http://', 'https://'));
-            }
-          });
-        });
-      });
-      
-      // Report successful HTTPS
-      console.log('🔒 HTTPS Security Check Complete');
-    </script>
   </body>
 
   <dialog id="quotes-dialog">
@@ -943,16 +921,16 @@
           <h4>Quote Summary</h4>
           <div class="quote-item">
             <div><span id="quote-student-qty">10</span> Student Licenses</div>
-            <span class="quote-price" id="quote-student-total">$50</span>
+            <span class="quote-price" id="quote-student-total">$150</span>
           </div>
           <div class="quote-item">
             <div><span id="quote-teacher-qty">1</span> Teacher Licenses</div>
-            <span class="quote-price" id="quote-teacher-total">$20</span>
+            <span class="quote-price" id="quote-teacher-total">$60</span>
           </div>
           <hr>
           <div class="quote-total">
             <strong>Total</strong>
-            <strong class="quote-price" id="quote-grand-total">$70</strong>
+            <strong class="quote-price" id="quote-grand-total">$210</strong>
           </div>
         </div>
         <div class="quote-form">
