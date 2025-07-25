@@ -144,9 +144,29 @@
    */
   function initSwiper() {
     document.querySelectorAll(".init-swiper").forEach(function (swiperElement) {
-      let config = JSON.parse(
-        swiperElement.querySelector(".swiper-config").innerHTML.trim()
-      );
+      // Check if there's a configuration script element
+      let configElement = swiperElement.querySelector(".swiper-config");
+      let config;
+
+      if (configElement) {
+        // Use configuration from script element if available
+        config = JSON.parse(configElement.innerHTML.trim());
+      } else {
+        // Use default configuration for testimonials slider
+        config = {
+          loop: true,
+          speed: 600,
+          autoplay: {
+            delay: 5000,
+          },
+          slidesPerView: "auto",
+          pagination: {
+            el: ".swiper-pagination",
+            type: "bullets",
+            clickable: true,
+          },
+        };
+      }
 
       if (swiperElement.classList.contains("swiper-tab")) {
         initSwiperWithCustomPagination(swiperElement, config);
@@ -154,6 +174,14 @@
         new Swiper(swiperElement, config);
       }
     });
+  }
+
+  /**
+   * Init swiper with custom pagination (fallback function)
+   */
+  function initSwiperWithCustomPagination(swiperElement, config) {
+    // For now, just use the regular Swiper initialization
+    new Swiper(swiperElement, config);
   }
 
   window.addEventListener("load", initSwiper);
@@ -270,11 +298,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function updateSummary() {
       const s = parseInt(studentInput.value, 10) || 0;
       const t = parseInt(teacherInput.value, 10) || 0;
-      const total = s * 5 + t * 20;
-      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} (${
-        s * 5
+      const total = s * 15 + t * 60;
+      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} ($${
+        s * 15
       }) + ${t} Teacher License${t !== 1 ? "s" : ""} ($${
-        t * 20
+        t * 60
       }) = <strong>$${total}</strong>`;
     }
 
@@ -298,7 +326,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
 
           const response = await fetch(
-            "https://tcpurchasingserver-production.up.railway.app/create-checkout-session",
+            "http://localhost:3001/create-checkout-session",
             {
               method: "POST",
               headers: {
@@ -364,8 +392,8 @@ document.addEventListener("DOMContentLoaded", function () {
         parseInt(document.getElementById("student-qty").value, 10) || 0;
       const teacherQty =
         parseInt(document.getElementById("teacher-qty").value, 10) || 0;
-      const studentTotal = studentQty * 5;
-      const teacherTotal = teacherQty * 20;
+      const studentTotal = studentQty * 15;
+      const teacherTotal = teacherQty * 60;
       const grandTotal = studentTotal + teacherTotal;
 
       document.getElementById("quote-student-qty").textContent = studentQty;
@@ -383,8 +411,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Bulk Quote button handler
+  const bulkQuoteBtn = document.getElementById("bulk-quote-button");
+  if (bulkQuoteBtn && quoteDialog) {
+    bulkQuoteBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Set bulk pricing values (unlimited licenses for $20,000)
+      document.getElementById("quote-student-qty").textContent = "∞";
+      document.getElementById("quote-teacher-qty").textContent = "∞";
+      document.getElementById("quote-student-total").textContent = "Included";
+      document.getElementById("quote-teacher-total").textContent = "Included";
+      document.getElementById("quote-grand-total").textContent = "$20,000";
+
+      // Update the dialog header for bulk pricing
+      const quoteHeader = quoteDialog.querySelector(".dialog-header h2");
+      if (quoteHeader) {
+        quoteHeader.textContent = "Request School-Wide License Quote";
+      }
+
+      // Add bulk pricing note if it doesn't exist
+      const quoteDetails = quoteDialog.querySelector(".quote-details");
+      let bulkNote = quoteDetails.querySelector(".bulk-note");
+      if (!bulkNote && quoteDetails) {
+        bulkNote = document.createElement("div");
+        bulkNote.className = "bulk-note";
+        bulkNote.style.cssText =
+          "background: #e3f2fd; padding: 15px; border-radius: 8px; margin-top: 15px; border-left: 4px solid #007bff;";
+        bulkNote.innerHTML =
+          "<strong>School-Wide License:</strong><br>Unlimited students and teachers for one school. Includes priority support, training, and custom implementation.";
+        quoteDetails.appendChild(bulkNote);
+      }
+
+      quoteDialog.showModal();
+
+      // Store that this is a bulk quote for later reference
+      window.currentQuoteType = "bulk";
+    });
+  }
+
+  // Function to reset quote dialog to normal state
+  function resetQuoteDialog() {
+    window.currentQuoteType = null;
+    const quoteHeader = quoteDialog?.querySelector(".dialog-header h2");
+    if (quoteHeader) {
+      quoteHeader.textContent = "Request a Quote";
+    }
+    const bulkNote = quoteDialog?.querySelector(".bulk-note");
+    if (bulkNote) {
+      bulkNote.remove();
+    }
+  }
+
   if (closeQuoteDialogBtn && quoteDialog) {
     closeQuoteDialogBtn.addEventListener("click", () => {
+      resetQuoteDialog();
       quoteDialog.close();
     });
   }
@@ -393,6 +474,7 @@ document.addEventListener("DOMContentLoaded", function () {
   if (quoteDialog) {
     quoteDialog.addEventListener("click", (e) => {
       if (e.target === quoteDialog) {
+        resetQuoteDialog();
         quoteDialog.close();
       }
     });
@@ -531,8 +613,8 @@ document.addEventListener("DOMContentLoaded", function () {
         startY: 85,
         head: [["Item Description", "Quantity", "Unit Price", "Total"]],
         body: [
-          ["Student License", studentQty, "$5.00", studentTotal],
-          ["Teacher License", teacherQty, "$20.00", teacherTotal],
+          ["Student License", studentQty, "$15.00", studentTotal],
+          ["Teacher License", teacherQty, "$60.00", teacherTotal],
         ],
         theme: "striped",
         headStyles: { fillColor: [44, 62, 80] },
@@ -721,8 +803,8 @@ document.addEventListener("DOMContentLoaded", function () {
         startY: 85,
         head: [["Item Description", "Quantity", "Unit Price", "Total"]],
         body: [
-          ["Student License", studentQty, "$5.00", studentTotal],
-          ["Teacher License", teacherQty, "$20.00", teacherTotal],
+          ["Student License", studentQty, "$15.00", studentTotal],
+          ["Teacher License", teacherQty, "$60.00", teacherTotal],
         ],
         theme: "striped",
         headStyles: { fillColor: [44, 62, 80] },
@@ -779,7 +861,7 @@ document.addEventListener("DOMContentLoaded", function () {
         quoteDate,
       };
       // Send to server as JSON
-      const response = await fetch("https://tcpurchasingserver-production.up.railway.app/send-quote-email", {
+      const response = await fetch("http://localhost:3001/send-quote-email", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
@@ -835,5 +917,110 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (emailQuoteBtn) {
     emailQuoteBtn.addEventListener("click", handleEmailQuote);
+  }
+
+  // API Configuration
+  window.API_BASE_URL = "http://localhost:3001"; // Force local for testing
+  // window.API_BASE_URL = window.location.hostname === 'localhost'
+  //   ? 'http://localhost:3001'
+  //   : 'https://tcpurchasingserver-production.up.railway.app';
+
+  // HTTPS Security and Mixed Content Detection
+  function initSecurityChecks() {
+    // Check for mixed content issues
+    if (location.protocol !== "https:" && location.hostname !== "localhost") {
+      console.warn("⚠️ Site is not served over HTTPS");
+    } else {
+      console.log("✅ Site is served over HTTPS");
+    }
+
+    // Log any network errors
+    window.addEventListener("securitypolicyviolation", function (e) {
+      console.error("🚫 CSP Violation:", e.violatedDirective, e.blockedURI);
+    });
+
+    // Check for insecure requests and auto-upgrade them
+    const originalFetch = window.fetch;
+    window.fetch = function (url, options) {
+      if (
+        typeof url === "string" &&
+        url.startsWith("http://") &&
+        location.protocol === "https:"
+      ) {
+        console.warn("🔧 Auto-upgrading HTTP request to HTTPS:", url);
+        url = url.replace("http://", "https://");
+      }
+      return originalFetch.apply(this, arguments);
+    };
+
+    // Also patch XMLHttpRequest
+    const originalOpen = XMLHttpRequest.prototype.open;
+    XMLHttpRequest.prototype.open = function (
+      method,
+      url,
+      async,
+      user,
+      password
+    ) {
+      if (
+        typeof url === "string" &&
+        url.startsWith("http://") &&
+        location.protocol === "https:"
+      ) {
+        console.warn("🔧 Auto-upgrading XMLHttpRequest to HTTPS:", url);
+        url = url.replace("http://", "https://");
+      }
+      return originalOpen.call(this, method, url, async, user, password);
+    };
+
+    // Check for mixed content in images, scripts, etc.
+    window.addEventListener("load", function () {
+      const allElements = document.querySelectorAll("*");
+      allElements.forEach((el) => {
+        ["src", "href", "action"].forEach((attr) => {
+          const value = el.getAttribute(attr);
+          if (
+            value &&
+            value.startsWith("http://") &&
+            location.protocol === "https:"
+          ) {
+            console.warn("🔧 Found HTTP resource, auto-upgrading:", value);
+            el.setAttribute(attr, value.replace("http://", "https://"));
+          }
+        });
+      });
+    });
+
+    // Report successful HTTPS
+    console.log("🔒 HTTPS Security Check Complete");
+  }
+
+  // Initialize security checks
+  initSecurityChecks();
+
+  // Stripe Integration (dynamic loading)
+  window.loadStripe = function () {
+    return new Promise((resolve) => {
+      if (window.Stripe) {
+        resolve(window.Stripe);
+        return;
+      }
+
+      const script = document.createElement("script");
+      script.src = "https://js.stripe.com/v3/";
+      script.onload = () => resolve(window.Stripe);
+      document.head.appendChild(script);
+    });
+  };
+
+  // Make Stripe loader globally available
+  window.initStripe = window.loadStripe;
+
+  // jsPDF compatibility shim
+  if (
+    typeof window.jspdf !== "undefined" &&
+    typeof window.jsPDF === "undefined"
+  ) {
+    window.jsPDF = window.jspdf.jsPDF;
   }
 });
