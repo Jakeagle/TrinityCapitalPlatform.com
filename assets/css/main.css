@@ -2090,3 +2090,345 @@ section,
     transform: rotate(360deg);
   }
 }
+
+/*--------------------------------------------------------------
+# Custom Pricing Section Styles
+--------------------------------------------------------------*/
+.pricing-item.featured {
+  position: relative;
+  border: 3px solid #28a745;
+  transform: scale(1.02);
+  box-shadow: 0 8px 30px rgba(40, 167, 69, 0.25);
+  z-index: 2;
+}
+
+.pricing-item.featured h3 {
+  color: #000000;
+  font-weight: bold;
+}
+
+.pricing-item.featured h4 {
+  color: #000000;
+}
+
+.pricing-item.featured ul li strong {
+  color: #000000;
+}
+
+/* Enhanced Pricing Card Styles - Override base styles */
+.pricing .pricing-item {
+  padding: 25px 20px 20px 20px;
+  height: 580px; /* Increased height to accommodate content */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+  position: relative;
+  background-color: var(--surface-color);
+}
+
+.pricing .pricing-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.pricing .pricing-item h3 {
+  margin: -25px -20px 20px -20px !important;
+  padding: 25px 20px 15px 20px !important;
+  font-size: 18px !important;
+  font-weight: 600 !important;
+  text-align: center;
+  border-radius: 10px 10px 0 0;
+  color: color-mix(in srgb, var(--default-color), transparent 20%);
+  background: color-mix(in srgb, var(--default-color), transparent 95%);
+}
+
+.pricing .pricing-item h4 {
+  font-size: 28px !important;
+  margin: 0 0 20px 0;
+  text-align: center;
+  font-family: var(--heading-font);
+  font-weight: 600;
+}
+
+.pricing .pricing-item h4 sup {
+  font-size: 20px;
+  top: -15px;
+  left: -3px;
+}
+
+.pricing .pricing-item h4 span {
+  color: color-mix(in srgb, var(--default-color), transparent 40%);
+  font-size: 16px;
+  font-weight: 300;
+}
+
+.pricing .pricing-item ul {
+  flex-grow: 1;
+  margin: 0 0 20px 0;
+  padding: 0;
+  list-style: none;
+  text-align: left;
+  line-height: 20px;
+  font-size: 14px;
+}
+
+.pricing .pricing-item ul li {
+  padding: 8px 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.pricing .pricing-item ul li i {
+  width: 20px;
+  text-align: center;
+  flex-shrink: 0;
+  color: var(--accent-color);
+  font-size: 18px;
+}
+
+.pricing .pricing-item .btn {
+  margin-top: auto;
+  padding: 12px 20px;
+  font-weight: 600;
+  border-radius: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  align-self: stretch;
+}
+
+/* Form inputs inside cards */
+.pricing .pricing-item .form-control-sm {
+  padding: 6px 8px;
+  font-size: 13px;
+  border-radius: 4px;
+}
+
+.pricing .pricing-item .form-label {
+  font-size: 12px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.pricing .pricing-item .row.mb-2 {
+  margin-bottom: 15px !important;
+}
+
+.pricing .pricing-item .row.mb-2 .col-6 {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.pricing .pricing-item .row.mb-2 .col-6:first-child {
+  padding-left: 0;
+}
+
+.pricing .pricing-item .row.mb-2 .col-6:last-child {
+  padding-right: 0;
+}
+
+.pricing .pricing-item .mt-3 {
+  margin-top: auto !important;
+}
+
+/* Price display improvements */
+.pricing .pricing-item h4 span#total-price {
+  color: #28a745;
+  font-weight: bold;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .pricing-item.featured {
+    transform: none;
+    margin-top: 25px;
+  }
+
+  .pricing .pricing-item {
+    height: auto;
+    min-height: 520px;
+    margin-bottom: 20px;
+  }
+}
+
+@media (max-width: 991px) {
+  .col-xl-4 {
+    margin-bottom: 25px;
+  }
+
+  .pricing .pricing-item {
+    height: auto;
+    min-height: 520px;
+  }
+}
+
+/* Desktop improvements */
+@media (min-width: 1200px) {
+  .pricing .pricing-item {
+    height: 580px;
+  }
+
+  .pricing-item.featured {
+    transform: scale(1.03);
+  }
+}
+
+/* Ensure equal column spacing */
+.pricing .row.gy-4 {
+  --bs-gutter-y: 2rem;
+}
+
+@media (min-width: 768px) {
+  .pricing .row.gy-4 .col-xl-4,
+  .pricing .row.gy-4 .col-lg-6,
+  .pricing .row.gy-4 .col-md-6 {
+    display: flex;
+    align-items: stretch;
+  }
+
+  .pricing .row.gy-4 .col-xl-4 .pricing-item,
+  .pricing .row.gy-4 .col-lg-6 .pricing-item,
+  .pricing .row.gy-4 .col-md-6 .pricing-item {
+    width: 100%;
+  }
+}
+
+@media (max-width: 1199px) and (min-width: 992px) {
+  .pricing .pricing-item {
+    min-height: 520px;
+    font-size: 0.9em;
+  }
+
+  .pricing .pricing-item h3 {
+    font-size: 1.3em !important;
+  }
+
+  .pricing .pricing-item h4 {
+    font-size: 1.8em !important;
+  }
+}
+
+/* Additional card alignment improvements */
+.pricing .row {
+  display: flex;
+  align-items: stretch;
+}
+
+.pricing .col-xl-4,
+.pricing .col-lg-6,
+.pricing .col-md-6 {
+  display: flex;
+  margin-bottom: 30px;
+}
+
+.pricing .col-xl-4 .pricing-item,
+.pricing .col-lg-6 .pricing-item,
+.pricing .col-md-6 .pricing-item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* Modal Dialog Styles */
+dialog {
+  border: none;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 0;
+  max-width: 600px;
+  width: 90%;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dialog-header {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  padding: 20px;
+  border-radius: 10px 10px 0 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dialog-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.dialog-body {
+  padding: 30px;
+}
+
+.dialog-footer {
+  padding: 20px 30px;
+  border-top: 1px solid #dee2e6;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-label {
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+  color: #333;
+}
+
+#free-trial-dialog .dialog-header {
+  background: linear-gradient(135deg, #17a2b8, #138496);
+}
+
+/* Button loading states */
+.btn[aria-busy="true"] {
+  position: relative;
+  color: transparent;
+}
+
+.btn[aria-busy="true"]::after {
+  content: "";
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: 2px solid currentColor;
+  border-radius: 50%;
+  border-top-color: transparent;
+  animation: spin 1s linear infinite;
+}
