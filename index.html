@@ -40,375 +40,6 @@
     <!-- Main CSS File -->
     <link href="assets/css/main.css" rel="stylesheet" />
 
-    <!-- Custom CSS for Bulk Pricing -->
-    <style>
-      .pricing-item.featured {
-        position: relative;
-        border: 3px solid #28a745;
-        transform: scale(1.02);
-        box-shadow: 0 8px 30px rgba(40, 167, 69, 0.25);
-        z-index: 2;
-      }
-      
-      .popular-badge {
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: linear-gradient(45deg, #28a745, #1e7e34);
-        color: white;
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: bold;
-        box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
-        z-index: 10;
-      }
-      
-      .pricing-item.featured h3 {
-        color: #000000;
-        font-weight: bold;
-      }
-      
-      .pricing-item.featured h4 {
-        color: #000000;
-      }
-      
-      .pricing-item.featured ul li strong {
-        color: #000000;
-      }
-      
-      /* Responsive Design */
-      @media (max-width: 768px) {
-        .pricing-item.featured {
-          transform: none;
-          margin-top: 25px;
-        }
-        
-        .pricing-item {
-          height: auto;
-          min-height: 450px;
-          margin-bottom: 20px;
-        }
-        
-        .popular-badge {
-          top: -10px;
-          font-size: 11px;
-          padding: 5px 12px;
-        }
-      }
-      
-      @media (max-width: 991px) {
-        .col-xl-4 {
-          margin-bottom: 25px;
-        }
-        
-        .pricing-item {
-          height: auto;
-          min-height: 480px;
-        }
-      }
-      
-      /* Desktop improvements */
-      @media (min-width: 1200px) {
-        .pricing-item {
-          height: 560px;
-        }
-        
-        .pricing-item.featured {
-          transform: scale(1.03);
-        }
-      }
-      
-      /* Ensure equal column spacing */
-      .row.gy-4 {
-        --bs-gutter-y: 2rem;
-      }
-      
-      @media (min-width: 768px) {
-        .row.gy-4 .col-xl-4,
-        .row.gy-4 .col-lg-6,
-        .row.gy-4 .col-md-6 {
-          display: flex;
-          align-items: stretch;
-        }
-        
-        .row.gy-4 .col-xl-4 .pricing-item,
-        .row.gy-4 .col-lg-6 .pricing-item,
-        .row.gy-4 .col-md-6 .pricing-item {
-          width: 100%;
-        }
-      }
-      
-      @media (max-width: 1199px) and (min-width: 992px) {
-        .pricing-item {
-          min-height: 400px;
-          font-size: 0.9em;
-        }
-        
-        .pricing-item h3 {
-          font-size: 1.3em;
-        }
-        
-        .pricing-item h4 {
-          font-size: 1.8em;
-        }
-      }
-
-      /* Modal Dialog Styles */
-      dialog {
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-        padding: 0;
-        max-width: 600px;
-        width: 90%;
-      }
-
-      dialog::backdrop {
-        background: rgba(0, 0, 0, 0.5);
-      }
-
-      .dialog-header {
-        background: linear-gradient(135deg, #007bff, #0056b3);
-        color: white;
-        padding: 20px;
-        border-radius: 10px 10px 0 0;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-      }
-
-      .dialog-header h2 {
-        margin: 0;
-        font-size: 1.5em;
-      }
-
-      .close-btn {
-        background: none;
-        border: none;
-        color: white;
-        font-size: 24px;
-        cursor: pointer;
-        padding: 0;
-        width: 30px;
-        height: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 50%;
-        transition: background-color 0.2s;
-      }
-
-      .close-btn:hover {
-        background: rgba(255, 255, 255, 0.2);
-      }
-
-      .dialog-body {
-        padding: 30px;
-      }
-
-      .dialog-footer {
-        padding: 20px 30px;
-        border-top: 1px solid #dee2e6;
-        display: flex;
-        gap: 10px;
-        justify-content: flex-end;
-      }
-
-      .form-group {
-        margin-bottom: 20px;
-      }
-
-      .form-label {
-        font-weight: 600;
-        margin-bottom: 8px;
-        display: block;
-        color: #333;
-      }
-
-      #free-trial-dialog .dialog-header {
-        background: linear-gradient(135deg, #17a2b8, #138496);
-      }
-
-      /* Enhanced Pricing Card Styles */
-      .pricing-item {
-        padding: 25px 20px;
-        height: 550px; /* Fixed height for all cards */
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        border-radius: 10px;
-        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        position: relative;
-      }
-      
-      .pricing-item:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
-      }
-      
-      .pricing-item h3 {
-        margin: -25px -20px 20px -20px !important;
-        padding: 20px 20px !important;
-        font-size: 18px !important;
-        font-weight: 600 !important;
-        text-align: center;
-        border-radius: 10px 10px 0 0;
-      }
-      
-      .pricing-item h4 {
-        font-size: 28px !important;
-        margin: 10px 0 15px 0;
-        text-align: center;
-      }
-      
-      .pricing-item ul {
-        flex-grow: 1;
-        margin: 15px 0;
-        padding: 0;
-        list-style: none;
-        text-align: left;
-      }
-      
-      .pricing-item ul li {
-        padding: 6px 0;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        font-size: 14px;
-        line-height: 1.4;
-      }
-      
-      .pricing-item ul li i {
-        width: 20px;
-        text-align: center;
-        flex-shrink: 0;
-      }
-      
-      .pricing-item .btn {
-        margin-top: auto;
-        padding: 12px 20px;
-        font-weight: 600;
-        border-radius: 6px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-      
-      /* Form inputs inside cards */
-      .pricing-item .form-control-sm {
-        padding: 6px 8px;
-        font-size: 13px;
-        border-radius: 4px;
-      }
-      
-      .pricing-item .form-label {
-        font-size: 12px;
-        font-weight: 600;
-        margin-bottom: 4px;
-      }
-      
-      .form-control-sm {
-        font-size: 0.875rem;
-      }
-      
-      .alert-info {
-        border-left: 4px solid #17a2b8;
-      }
-      
-      /* Additional card alignment improvements */
-      .pricing .row {
-        display: flex;
-        align-items: stretch;
-      }
-      
-      .pricing .col-xl-4,
-      .pricing .col-lg-6,
-      .pricing .col-md-6 {
-        display: flex;
-        margin-bottom: 30px;
-      }
-      
-      .pricing .col-xl-4 .pricing-item,
-      .pricing .col-lg-6 .pricing-item,
-      .pricing .col-md-6 .pricing-item {
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-      }
-      
-      /* Ensure consistent button positioning */
-      .pricing-item .mt-3 {
-        margin-top: auto !important;
-      }
-      
-      /* Badge positioning fixes */
-      .pricing-item > div:first-child {
-        margin-bottom: 10px;
-      }
-      
-      /* Special styling for cards with badges */
-      .pricing-item.featured h3,
-      .pricing-item[style*="position: relative"] h3 {
-        margin-top: 15px !important;
-      }
-      
-      /* Individual License card form improvements */
-      .pricing-item .row.mb-2 {
-        margin-bottom: 15px !important;
-      }
-      
-      .pricing-item .row.mb-2 .col-6 {
-        padding-left: 5px;
-        padding-right: 5px;
-      }
-      
-      .pricing-item .row.mb-2 .col-6:first-child {
-        padding-left: 0;
-      }
-      
-      .pricing-item .row.mb-2 .col-6:last-child {
-        padding-right: 0;
-      }
-      
-      /* Ensure proper vertical spacing */
-      .pricing-item ul {
-        margin-bottom: 20px;
-      }
-      
-      /* Price display improvements */
-      .pricing-item h4 span#total-price {
-        color: #28a745;
-        font-weight: bold;
-      }
-      
-      /* Button loading states */
-      .btn[aria-busy="true"] {
-        position: relative;
-        color: transparent;
-      }
-      
-      .btn[aria-busy="true"]::after {
-        content: "";
-        position: absolute;
-        width: 16px;
-        height: 16px;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        border: 2px solid currentColor;
-        border-radius: 50%;
-        border-top-color: transparent;
-        animation: spin 1s linear infinite;
-      }
-      
-      @keyframes spin {
-        to { transform: translate(-50%, -50%) rotate(360deg); }
-      }
-    </style>
-
     <!-- =======================================================
   * Template Name: BizLand
   * Template URL: https://bootstrapmade.com/bizland-bootstrap-business-template/
@@ -825,9 +456,8 @@
           <div class="row gy-4 justify-content-center mb-5">
             <!-- Free Trial Card -->
             <div class="col-xl-4 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); position: relative;">
-                <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 6px 15px; border-radius: 15px; font-size: 12px; font-weight: bold; z-index: 10;">TRY FREE</div>
-                <h3 style="margin-top: 10px;">Free Trial</h3>
+              <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <h3>Free Trial</h3>
                 <h4><sup>$</sup>0<span> / 30 days</span></h4>
                 <ul>
                   <li><i class="bi bi-check text-success"></i> Unlimited students</li>
@@ -850,14 +480,9 @@
               <div class="pricing-item">
                 <h3>Individual Licenses</h3>
                 <h4>Pay<span> per user</span></h4>
-                <ul>
-                  <li><i class="bi bi-person"></i> <strong>Students:</strong> $15 each</li>
-                  <li><i class="bi bi-person-check"></i> <strong>Teachers:</strong> $60 each</li>
-                  <li><i class="bi bi-check text-success"></i> Full app access</li>
-                  <li><i class="bi bi-check text-success"></i> Admin dashboard</li>
-                  <li><i class="bi bi-check text-success"></i> Priority support</li>
-                </ul>
-                <div class="mt-3">
+                
+                <!-- Quantity Inputs -->
+                <div class="mb-3">
                   <div class="row mb-2">
                     <div class="col-6">
                       <label class="form-label small">Students</label>
@@ -868,13 +493,39 @@
                       <input type="number" id="teacher-qty" class="form-control form-control-sm" min="1" value="2" form="school-license-form">
                     </div>
                   </div>
-                  <button 
-                    type="submit" 
-                    class="btn btn-primary w-100"
-                    id="purchase-button"
-                    form="school-license-form">
-                    <i class="bi bi-credit-card"></i> Buy Now - <span id="total-price">$435</span>
-                  </button>
+                </div>
+                
+                <ul>
+                  <li><i class="bi bi-person"></i> <strong>Students:</strong> $15 each</li>
+                  <li><i class="bi bi-person-check"></i> <strong>Teachers:</strong> $60 each</li>
+                  <li><i class="bi bi-check text-success"></i> Full app access</li>
+                  <li><i class="bi bi-check text-success"></i> Admin dashboard</li>
+                  <li><i class="bi bi-check text-success"></i> Priority support</li>
+                </ul>
+                
+                <div class="mt-3">
+                  <div class="row mb-2">
+                    <div class="col-6">
+                      <button 
+                        type="button" 
+                        class="btn btn-outline-secondary w-100 btn-sm"
+                        id="individual-quote-button">
+                        <i class="bi bi-file-text"></i> Request Quote
+                      </button>
+                    </div>
+                    <div class="col-6">
+                      <button 
+                        type="submit" 
+                        class="btn btn-primary w-100 btn-sm"
+                        id="purchase-button"
+                        form="school-license-form">
+                        <i class="bi bi-credit-card"></i> Buy Now
+                      </button>
+                    </div>
+                  </div>
+                  <div class="text-center mt-2">
+                    <small class="text-muted">Total: <strong><span id="total-price">$435</span></strong></small>
+                  </div>
                 </div>
               </div>
             </div>
@@ -882,8 +533,7 @@
             <!-- School-Wide License -->
             <div class="col-xl-4 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
               <div class="pricing-item featured">
-                <div class="popular-badge">MOST POPULAR</div>
-                <h3 style="margin-top: 10px;">School-Wide</h3>
+                <h3>School-Wide</h3>
                 <h4><sup>$</sup>20,000<span> / year</span></h4>
                 <ul>
                   <li><i class="bi bi-infinity text-primary"></i> <strong>Unlimited</strong> students</li>
