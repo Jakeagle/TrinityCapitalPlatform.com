@@ -465,6 +465,45 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Individual Quote button handler
+  const individualQuoteBtn = document.getElementById("individual-quote-button");
+  if (individualQuoteBtn && quoteDialog) {
+    individualQuoteBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      // Populate quote details from the individual license inputs
+      const studentQty =
+        parseInt(document.getElementById("student-qty").value, 10) || 0;
+      const teacherQty =
+        parseInt(document.getElementById("teacher-qty").value, 10) || 0;
+      const studentTotal = studentQty * 15;
+      const teacherTotal = teacherQty * 60;
+      const grandTotal = studentTotal + teacherTotal;
+
+      document.getElementById("quote-student-qty").textContent = studentQty;
+      document.getElementById("quote-student-total").textContent =
+        `$${studentTotal}`;
+
+      document.getElementById("quote-teacher-qty").textContent = teacherQty;
+      document.getElementById("quote-teacher-total").textContent =
+        `$${teacherTotal}`;
+
+      document.getElementById("quote-grand-total").textContent =
+        `$${grandTotal}`;
+
+      // Remove any bulk note if it exists
+      const existingBulkNote = quoteDialog.querySelector(".bulk-note");
+      if (existingBulkNote) {
+        existingBulkNote.remove();
+      }
+
+      quoteDialog.showModal();
+
+      // Store that this is an individual quote for later reference
+      window.currentQuoteType = "individual";
+    });
+  }
+
   // Free Trial button handler
   const freeTrialBtn = document.getElementById("free-trial-button");
   const freeTrialDialog = document.getElementById("free-trial-dialog");
