@@ -450,6 +450,114 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // Free Trial button handler
+  const freeTrialBtn = document.getElementById("free-trial-button");
+  const freeTrialDialog = document.getElementById("free-trial-dialog");
+  const closeFreeTrialBtn = document.getElementById("close-trial-dialog-btn");
+  const cancelTrialBtn = document.getElementById("cancel-trial-btn");
+  const startTrialBtn = document.getElementById("start-trial-btn");
+
+  if (freeTrialBtn && freeTrialDialog) {
+    freeTrialBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      freeTrialDialog.showModal();
+    });
+  }
+
+  // Close free trial dialog handlers
+  if (closeFreeTrialBtn && freeTrialDialog) {
+    closeFreeTrialBtn.addEventListener("click", () => {
+      freeTrialDialog.close();
+    });
+  }
+
+  if (cancelTrialBtn && freeTrialDialog) {
+    cancelTrialBtn.addEventListener("click", () => {
+      freeTrialDialog.close();
+    });
+  }
+
+  // Close dialog on backdrop click
+  if (freeTrialDialog) {
+    freeTrialDialog.addEventListener("click", (e) => {
+      if (e.target === freeTrialDialog) {
+        freeTrialDialog.close();
+      }
+    });
+  }
+
+  // Start trial button handler
+  if (startTrialBtn) {
+    startTrialBtn.addEventListener("click", async () => {
+      const form = document.getElementById("free-trial-form");
+
+      // Validate form
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      // Get form data
+      const formData = {
+        admin_name: document.getElementById("trial-admin-name").value,
+        admin_email: document.getElementById("trial-admin-email").value,
+        school_name: document.getElementById("trial-school-name").value,
+        district_name: document.getElementById("trial-district-name").value,
+        teacher_quantity: parseInt(
+          document.getElementById("trial-teacher-qty").value
+        ),
+        student_quantity: parseInt(
+          document.getElementById("trial-student-qty").value
+        ),
+      };
+
+      // Show loading state
+      const originalText = startTrialBtn.innerHTML;
+      startTrialBtn.innerHTML =
+        '<i class="bi bi-hourglass-split"></i> Creating Trial...';
+      startTrialBtn.disabled = true;
+
+      try {
+        const response = await fetch(
+          `${window.API_BASE_URL}/create-free-trial`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData),
+          }
+        );
+
+        const result = await response.json();
+
+        if (response.ok && result.success) {
+          // Success! Close dialog and redirect
+          freeTrialDialog.close();
+
+          // Show success message
+          alert(
+            `🎉 Free trial activated successfully!\n\nYou will receive a confirmation email shortly with instructions on how to distribute teacher access codes.\n\nRedirecting to your admin dashboard...`
+          );
+
+          // Redirect to license distribution with trial flag
+          window.location.href = result.redirect_url;
+        } else {
+          throw new Error(result.error || "Failed to create free trial");
+        }
+      } catch (error) {
+        console.error("Error creating free trial:", error);
+        alert(
+          `Error creating free trial: ${error.message}\n\nPlease try again or contact support if the problem persists.`
+        );
+      } finally {
+        // Reset button state
+        startTrialBtn.innerHTML = originalText;
+        startTrialBtn.disabled = false;
+      }
+    });
+  }
+
   // Function to reset quote dialog to normal state
   function resetQuoteDialog() {
     window.currentQuoteType = null;
