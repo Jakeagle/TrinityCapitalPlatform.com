@@ -45,20 +45,21 @@
       .pricing-item.featured {
         position: relative;
         border: 3px solid #28a745;
-        transform: scale(1.05);
-        box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
+        transform: scale(1.02);
+        box-shadow: 0 8px 30px rgba(40, 167, 69, 0.25);
+        z-index: 2;
       }
       
       .popular-badge {
         position: absolute;
-        top: -15px;
+        top: -12px;
         left: 50%;
         transform: translateX(-50%);
         background: linear-gradient(45deg, #28a745, #1e7e34);
         color: white;
-        padding: 8px 20px;
+        padding: 6px 16px;
         border-radius: 20px;
-        font-size: 14px;
+        font-size: 12px;
         font-weight: bold;
         box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
         z-index: 10;
@@ -77,28 +78,65 @@
         color: #000000;
       }
       
+      /* Responsive Design */
       @media (max-width: 768px) {
         .pricing-item.featured {
           transform: none;
-          margin-top: 30px;
+          margin-top: 25px;
+        }
+        
+        .pricing-item {
+          height: auto;
+          min-height: 450px;
+          margin-bottom: 20px;
+        }
+        
+        .popular-badge {
+          top: -10px;
+          font-size: 11px;
+          padding: 5px 12px;
         }
       }
       
       @media (max-width: 991px) {
         .col-xl-3 {
-          margin-bottom: 30px;
+          margin-bottom: 25px;
         }
         
         .pricing-item {
           height: auto;
-          min-height: 400px;
+          min-height: 480px;
         }
       }
       
-      /* Responsive adjustments for 4-column layout */
+      /* Desktop improvements */
       @media (min-width: 1200px) {
         .pricing-item {
-          min-height: 450px;
+          height: 560px;
+        }
+        
+        .pricing-item.featured {
+          transform: scale(1.03);
+        }
+      }
+      
+      /* Ensure equal column spacing */
+      .row.gy-4 {
+        --bs-gutter-y: 2rem;
+      }
+      
+      @media (min-width: 768px) {
+        .row.gy-4 .col-xl-3,
+        .row.gy-4 .col-lg-6,
+        .row.gy-4 .col-md-6 {
+          display: flex;
+          align-items: stretch;
+        }
+        
+        .row.gy-4 .col-xl-3 .pricing-item,
+        .row.gy-4 .col-lg-6 .pricing-item,
+        .row.gy-4 .col-md-6 .pricing-item {
+          width: 100%;
         }
       }
       
@@ -195,27 +233,81 @@
 
       /* Enhanced Pricing Card Styles */
       .pricing-item {
-        padding: 30px 25px;
-        min-height: 480px;
+        padding: 25px 20px;
+        height: 550px; /* Fixed height for all cards */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+        border-radius: 10px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+      }
+      
+      .pricing-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      }
+      
+      .pricing-item h3 {
+        margin: -25px -20px 15px -20px !important;
+        padding: 15px 20px !important;
+        font-size: 18px !important;
+        font-weight: 600 !important;
+        text-align: center;
+        border-radius: 10px 10px 0 0;
+      }
+      
+      .pricing-item h4 {
+        font-size: 28px !important;
+        margin: 10px 0 15px 0;
+        text-align: center;
       }
       
       .pricing-item ul {
         flex-grow: 1;
-        margin: 20px 0;
+        margin: 15px 0;
+        padding: 0;
+        list-style: none;
+        text-align: left;
       }
       
       .pricing-item ul li {
-        padding: 8px 0;
+        padding: 6px 0;
         display: flex;
         align-items: center;
         gap: 8px;
+        font-size: 14px;
+        line-height: 1.4;
+      }
+      
+      .pricing-item ul li i {
+        width: 20px;
+        text-align: center;
+        flex-shrink: 0;
       }
       
       .pricing-item .btn {
         margin-top: auto;
+        padding: 12px 20px;
+        font-weight: 600;
+        border-radius: 6px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      
+      /* Form inputs inside cards */
+      .pricing-item .form-control-sm {
+        padding: 6px 8px;
+        font-size: 13px;
+        border-radius: 4px;
+      }
+      
+      .pricing-item .form-label {
+        font-size: 12px;
+        font-weight: 600;
+        margin-bottom: 4px;
       }
       
       .form-control-sm {
@@ -224,6 +316,66 @@
       
       .alert-info {
         border-left: 4px solid #17a2b8;
+      }
+      
+      /* Additional card alignment improvements */
+      .pricing .row {
+        display: flex;
+        align-items: stretch;
+      }
+      
+      .pricing .col-xl-3,
+      .pricing .col-lg-6,
+      .pricing .col-md-6 {
+        display: flex;
+        margin-bottom: 30px;
+      }
+      
+      .pricing .col-xl-3 .pricing-item,
+      .pricing .col-lg-6 .pricing-item,
+      .pricing .col-md-6 .pricing-item {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+      }
+      
+      /* Ensure consistent button positioning */
+      .pricing-item .mt-3 {
+        margin-top: auto !important;
+      }
+      
+      /* Badge positioning fixes */
+      .pricing-item > div:first-child {
+        margin-bottom: 10px;
+      }
+      
+      /* Individual License card form improvements */
+      .pricing-item .row.mb-2 {
+        margin-bottom: 15px !important;
+      }
+      
+      .pricing-item .row.mb-2 .col-6 {
+        padding-left: 5px;
+        padding-right: 5px;
+      }
+      
+      .pricing-item .row.mb-2 .col-6:first-child {
+        padding-left: 0;
+      }
+      
+      .pricing-item .row.mb-2 .col-6:last-child {
+        padding-right: 0;
+      }
+      
+      /* Ensure proper vertical spacing */
+      .pricing-item ul {
+        margin-bottom: 20px;
+      }
+      
+      /* Price display improvements */
+      .pricing-item h4 span#total-price {
+        color: #28a745;
+        font-weight: bold;
       }
       
       /* Button loading states */
