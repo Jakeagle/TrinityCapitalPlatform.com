@@ -287,28 +287,43 @@
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
-  // School License Order Summary Updater
+  // Individual License Price Calculator
   const studentInput = document.getElementById("student-qty");
   const teacherInput = document.getElementById("teacher-qty");
-  const summary = document.getElementById("order-summary");
+  const totalPriceSpan = document.getElementById("total-price");
+  const studentHidden = document.getElementById("student-qty-hidden");
+  const teacherHidden = document.getElementById("teacher-qty-hidden");
   const form = document.getElementById("school-license-form");
   const purchaseButton = document.getElementById("purchase-button");
 
-  if (studentInput && teacherInput && summary) {
-    function updateSummary() {
+  if (studentInput && teacherInput && totalPriceSpan) {
+    function updatePrice() {
       const s = parseInt(studentInput.value, 10) || 0;
       const t = parseInt(teacherInput.value, 10) || 0;
       const total = s * 15 + t * 60;
-      summary.innerHTML = `${s} Student License${s !== 1 ? "s" : ""} ($${
-        s * 15
-      }) + ${t} Teacher License${t !== 1 ? "s" : ""} ($${
-        t * 60
-      }) = <strong>$${total}</strong>`;
+
+      totalPriceSpan.textContent = `$${total}`;
+
+      // Update hidden form fields
+      if (studentHidden) studentHidden.value = s;
+      if (teacherHidden) teacherHidden.value = t;
+
+      // Update button text
+      if (purchaseButton) {
+        if (total === 0) {
+          purchaseButton.innerHTML =
+            '<i class="bi bi-credit-card"></i> Select Quantities';
+          purchaseButton.disabled = true;
+        } else {
+          purchaseButton.innerHTML = `<i class="bi bi-credit-card"></i> Buy Now - $${total}`;
+          purchaseButton.disabled = false;
+        }
+      }
     }
 
-    studentInput.addEventListener("input", updateSummary);
-    teacherInput.addEventListener("input", updateSummary);
-    updateSummary();
+    studentInput.addEventListener("input", updatePrice);
+    teacherInput.addEventListener("input", updatePrice);
+    updatePrice(); // Initial calculation
 
     // Handle form submission
     if (form && purchaseButton) {
