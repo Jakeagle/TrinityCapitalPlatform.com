@@ -52,7 +52,7 @@
       
       .popular-badge {
         position: absolute;
-        top: -12px;
+        top: -15px;
         left: 50%;
         transform: translateX(-50%);
         background: linear-gradient(45deg, #28a745, #1e7e34);
@@ -99,7 +99,7 @@
       }
       
       @media (max-width: 991px) {
-        .col-xl-3 {
+        .col-xl-4 {
           margin-bottom: 25px;
         }
         
@@ -126,14 +126,14 @@
       }
       
       @media (min-width: 768px) {
-        .row.gy-4 .col-xl-3,
+        .row.gy-4 .col-xl-4,
         .row.gy-4 .col-lg-6,
         .row.gy-4 .col-md-6 {
           display: flex;
           align-items: stretch;
         }
         
-        .row.gy-4 .col-xl-3 .pricing-item,
+        .row.gy-4 .col-xl-4 .pricing-item,
         .row.gy-4 .col-lg-6 .pricing-item,
         .row.gy-4 .col-md-6 .pricing-item {
           width: 100%;
@@ -250,8 +250,8 @@
       }
       
       .pricing-item h3 {
-        margin: -25px -20px 15px -20px !important;
-        padding: 15px 20px !important;
+        margin: -25px -20px 20px -20px !important;
+        padding: 20px 20px !important;
         font-size: 18px !important;
         font-weight: 600 !important;
         text-align: center;
@@ -324,14 +324,14 @@
         align-items: stretch;
       }
       
-      .pricing .col-xl-3,
+      .pricing .col-xl-4,
       .pricing .col-lg-6,
       .pricing .col-md-6 {
         display: flex;
         margin-bottom: 30px;
       }
       
-      .pricing .col-xl-3 .pricing-item,
+      .pricing .col-xl-4 .pricing-item,
       .pricing .col-lg-6 .pricing-item,
       .pricing .col-md-6 .pricing-item {
         width: 100%;
@@ -347,6 +347,12 @@
       /* Badge positioning fixes */
       .pricing-item > div:first-child {
         margin-bottom: 10px;
+      }
+      
+      /* Special styling for cards with badges */
+      .pricing-item.featured h3,
+      .pricing-item[style*="position: relative"] h3 {
+        margin-top: 15px !important;
       }
       
       /* Individual License card form improvements */
@@ -818,12 +824,10 @@
           <!-- Main Pricing Cards -->
           <div class="row gy-4 justify-content-center mb-5">
             <!-- Free Trial Card -->
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
-                <div style="text-align: center; margin-bottom: 15px;">
-                  <span style="background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">TRY FREE</span>
-                </div>
-                <h3>Free Trial</h3>
+            <div class="col-xl-4 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
+              <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); position: relative;">
+                <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 6px 15px; border-radius: 15px; font-size: 12px; font-weight: bold; z-index: 10;">TRY FREE</div>
+                <h3 style="margin-top: 10px;">Free Trial</h3>
                 <h4><sup>$</sup>0<span> / 30 days</span></h4>
                 <ul>
                   <li><i class="bi bi-check text-success"></i> Unlimited students</li>
@@ -842,7 +846,7 @@
             </div>
 
             <!-- Individual Licensing -->
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-xl-4 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
               <div class="pricing-item">
                 <h3>Individual Licenses</h3>
                 <h4>Pay<span> per user</span></h4>
@@ -876,10 +880,10 @@
             </div>
 
             <!-- School-Wide License -->
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+            <div class="col-xl-4 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
               <div class="pricing-item featured">
                 <div class="popular-badge">MOST POPULAR</div>
-                <h3>School-Wide</h3>
+                <h3 style="margin-top: 10px;">School-Wide</h3>
                 <h4><sup>$</sup>20,000<span> / year</span></h4>
                 <ul>
                   <li><i class="bi bi-infinity text-primary"></i> <strong>Unlimited</strong> students</li>
@@ -893,30 +897,6 @@
                   class="btn btn-success w-100 mt-3"
                   id="bulk-quote-button">
                   <i class="bi bi-building"></i> Get School Quote
-                </button>
-              </div>
-            </div>
-
-            <!-- Purchase Order Option -->
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
-              <div class="pricing-item" style="border: 2px solid #6c757d;">
-                <div style="text-align: center; margin-bottom: 15px;">
-                  <span style="background: #6c757d; color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">DISTRICTS</span>
-                </div>
-                <h3>Purchase Order</h3>
-                <h4>Custom<span> pricing</span></h4>
-                <ul>
-                  <li><i class="bi bi-file-text"></i> Formal quotes & invoices</li>
-                  <li><i class="bi bi-shield-check"></i> W-9 & tax documents</li>
-                  <li><i class="bi bi-calendar-check"></i> Net 30 payment terms</li>
-                  <li><i class="bi bi-truck"></i> Approved vendor status</li>
-                  <li><i class="bi bi-telephone"></i> Dedicated account rep</li>
-                </ul>
-                <button 
-                  type="button" 
-                  class="btn btn-outline-secondary w-100 mt-3"
-                  id="request-quote-btn">
-                  <i class="bi bi-envelope"></i> Request Quote
                 </button>
               </div>
             </div>
