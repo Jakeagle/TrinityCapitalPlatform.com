@@ -85,7 +85,7 @@
       }
       
       @media (max-width: 991px) {
-        .col-lg-3 {
+        .col-xl-3 {
           margin-bottom: 30px;
         }
         
@@ -93,6 +93,104 @@
           height: auto;
           min-height: 400px;
         }
+      }
+      
+      /* Responsive adjustments for 4-column layout */
+      @media (min-width: 1200px) {
+        .pricing-item {
+          min-height: 450px;
+        }
+      }
+      
+      @media (max-width: 1199px) and (min-width: 992px) {
+        .pricing-item {
+          min-height: 400px;
+          font-size: 0.9em;
+        }
+        
+        .pricing-item h3 {
+          font-size: 1.3em;
+        }
+        
+        .pricing-item h4 {
+          font-size: 1.8em;
+        }
+      }
+
+      /* Modal Dialog Styles */
+      dialog {
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        padding: 0;
+        max-width: 600px;
+        width: 90%;
+      }
+
+      dialog::backdrop {
+        background: rgba(0, 0, 0, 0.5);
+      }
+
+      .dialog-header {
+        background: linear-gradient(135deg, #007bff, #0056b3);
+        color: white;
+        padding: 20px;
+        border-radius: 10px 10px 0 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .dialog-header h2 {
+        margin: 0;
+        font-size: 1.5em;
+      }
+
+      .close-btn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: background-color 0.2s;
+      }
+
+      .close-btn:hover {
+        background: rgba(255, 255, 255, 0.2);
+      }
+
+      .dialog-body {
+        padding: 30px;
+      }
+
+      .dialog-footer {
+        padding: 20px 30px;
+        border-top: 1px solid #dee2e6;
+        display: flex;
+        gap: 10px;
+        justify-content: flex-end;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-label {
+        font-weight: 600;
+        margin-bottom: 8px;
+        display: block;
+        color: #333;
+      }
+
+      #free-trial-dialog .dialog-header {
+        background: linear-gradient(135deg, #17a2b8, #138496);
       }
     </style>
 
@@ -508,7 +606,7 @@
 
         <div class="container">
           <form id="school-license-form" class="row gy-3 justify-content-center">
-            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="100">
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
               <div class="pricing-item">
                 <h3>Student License</h3>
                 <h4><sup>$</sup>15<span> / student</span></h4>
@@ -525,7 +623,7 @@
             </div>
             <!-- End Student License -->
 
-            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="200">
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
               <div class="pricing-item">
                 <h3>Teacher License</h3>
                 <h4><sup>$</sup>60<span> / teacher</span></h4>
@@ -542,7 +640,7 @@
             </div>
             <!-- End Teacher License -->
 
-            <div class="col-lg-3" data-aos="fade-up" data-aos-delay="250">
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="250">
               <div class="pricing-item featured">
                 <h3>School-Wide License</h3>
                 <h4><sup>$</sup>20,000<span> / school</span></h4>
@@ -559,6 +657,29 @@
               </div>
             </div>
             <!-- End Bulk License -->
+
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
+                <div style="text-align: center; margin-bottom: 15px;">
+                  <span style="background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">FREE TRIAL</span>
+                </div>
+                <h3>30-Day Free Trial</h3>
+                <h4><sup>$</sup>0<span> / 30 days</span></h4>
+                <ul>
+                  <li>Full access to all features</li>
+                  <li>Unlimited student licenses</li>
+                  <li>Unlimited teacher licenses</li>
+                  <li>30-day trial period</li>
+                </ul>
+                <button 
+                  type="button" 
+                  class="btn btn-info w-100"
+                  id="free-trial-button">
+                  Start Free Trial
+                </button>
+              </div>
+            </div>
+            <!-- End Free Trial -->
 
             <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
               <div class="pricing-item">
@@ -933,6 +1054,84 @@
     <div class="dialog-footer">
       <button type="button" id="download-quote-pdf-btn" class="btn btn-secondary">Download PDF</button>
       <button type="button" id="email-quote-btn" class="btn btn-primary">Email Quote</button>
+    </div>
+  </dialog>
+
+  <dialog id="free-trial-dialog">
+    <div class="dialog-header">
+      <h2>🎉 Start Your Free Trial</h2>
+      <button id="close-trial-dialog-btn" class="close-btn" aria-label="Close">&times;</button>
+    </div>
+    <div class="dialog-body">
+      <div style="text-align: center; margin-bottom: 20px; padding: 15px; background: linear-gradient(135deg, #17a2b8, #138496); color: white; border-radius: 10px;">
+        <h4 style="margin: 0; color: white;">30 Days • Unlimited Access • Completely Free</h4>
+        <p style="margin: 5px 0 0 0; color: white; opacity: 0.9;">No credit card required</p>
+      </div>
+      
+      <form id="free-trial-form">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-admin-name" class="form-label">Administrator Name *</label>
+              <input type="text" id="trial-admin-name" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-admin-email" class="form-label">Administrator Email *</label>
+              <input type="email" id="trial-admin-email" class="form-control" required>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-school-name" class="form-label">School Name *</label>
+              <input type="text" id="trial-school-name" class="form-control" required>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-district-name" class="form-label">District Name *</label>
+              <input type="text" id="trial-district-name" class="form-control" required>
+            </div>
+          </div>
+        </div>
+        
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-teacher-qty" class="form-label">Number of Teachers *</label>
+              <input type="number" id="trial-teacher-qty" class="form-control" min="1" value="5" required>
+              <small class="form-text text-muted">How many teachers will use Trinity Capital?</small>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label for="trial-student-qty" class="form-label">Number of Students *</label>
+              <input type="number" id="trial-student-qty" class="form-control" min="1" value="150" required>
+              <small class="form-text text-muted">Approximate total students across all classes</small>
+            </div>
+          </div>
+        </div>
+        
+        <div style="background-color: #e7f3ff; border: 1px solid #b8daff; padding: 15px; margin: 20px 0; border-radius: 5px;">
+          <h6 style="color: #004085; margin-bottom: 10px;"><i class="bi bi-info-circle"></i> What happens next?</h6>
+          <ul style="color: #004085; margin: 0; padding-left: 20px;">
+            <li>You'll receive teacher access codes immediately</li>
+            <li>Teachers create accounts and generate student codes</li>
+            <li>All accounts get 30 days of full access</li>
+            <li>No credit card required • Cancel anytime</li>
+          </ul>
+        </div>
+      </form>
+    </div>
+    <div class="dialog-footer">
+      <button type="button" id="cancel-trial-btn" class="btn btn-secondary">Cancel</button>
+      <button type="button" id="start-trial-btn" class="btn btn-info">
+        <i class="bi bi-rocket"></i> Start Free Trial
+      </button>
     </div>
   </dialog>
 </html>
