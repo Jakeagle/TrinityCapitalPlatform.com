@@ -192,6 +192,63 @@
       #free-trial-dialog .dialog-header {
         background: linear-gradient(135deg, #17a2b8, #138496);
       }
+
+      /* Enhanced Pricing Card Styles */
+      .pricing-item {
+        padding: 30px 25px;
+        min-height: 480px;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+      
+      .pricing-item ul {
+        flex-grow: 1;
+        margin: 20px 0;
+      }
+      
+      .pricing-item ul li {
+        padding: 8px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      
+      .pricing-item .btn {
+        margin-top: auto;
+      }
+      
+      .form-control-sm {
+        font-size: 0.875rem;
+      }
+      
+      .alert-info {
+        border-left: 4px solid #17a2b8;
+      }
+      
+      /* Button loading states */
+      .btn[aria-busy="true"] {
+        position: relative;
+        color: transparent;
+      }
+      
+      .btn[aria-busy="true"]::after {
+        content: "";
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        border: 2px solid currentColor;
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+      }
+      
+      @keyframes spin {
+        to { transform: translate(-50%, -50%) rotate(360deg); }
+      }
     </style>
 
     <!-- =======================================================
@@ -593,126 +650,142 @@
       <!-- /Team Section -->
 
       <!-- Pricing Section -->
+            <!-- Pricing Section -->
       <section id="pricing" class="pricing section">
         <!-- Section Title -->
         <div class="container section-title" data-aos="fade-up">
-          <h2>School Licensing</h2>
+          <h2>Choose Your License Plan</h2>
           <p>
-            <span>Purchase</span>
-            <span class="description-title">Student &amp; Teacher Licenses</span>
+            <span>Flexible Pricing</span>
+            <span class="description-title">For Schools of All Sizes</span>
           </p>
         </div>
         <!-- End Section Title -->
 
         <div class="container">
-          <form id="school-license-form" class="row gy-3 justify-content-center">
+          <!-- Main Pricing Cards -->
+          <div class="row gy-4 justify-content-center mb-5">
+            <!-- Free Trial Card -->
             <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="100">
-              <div class="pricing-item">
-                <h3>Student License</h3>
-                <h4><sup>$</sup>15<span> / student</span></h4>
-                <ul>
-                  <li>Full app access for students</li>
-                  <li>Classroom management tools</li>
-                  <li>Access to all lessons</li>
-                </ul>
-                <div class="mb-3">
-                  <label for="student-qty" class="form-label">Number of Student Licenses</label>
-                  <input type="number" id="student-qty" name="student_qty" class="form-control" min="1" value="10" required>
-                </div>
-              </div>
-            </div>
-            <!-- End Student License -->
-
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
-              <div class="pricing-item">
-                <h3>Teacher License</h3>
-                <h4><sup>$</sup>60<span> / teacher</span></h4>
-                <ul>
-                  <li>Full app access for teachers</li>
-                  <li>Admin dashboard</li>
-                  <li>Priority support</li>
-                </ul>
-                <div class="mb-3">
-                  <label for="teacher-qty" class="form-label">Number of Teacher Licenses</label>
-                  <input type="number" id="teacher-qty" name="teacher_qty" class="form-control" min="1" value="1" required>
-                </div>
-              </div>
-            </div>
-            <!-- End Teacher License -->
-
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="250">
-              <div class="pricing-item featured">
-                <h3>School-Wide License</h3>
-                <h4><sup>$</sup>20,000<span> / school</span></h4>
-                <ul>
-                  <li><strong>Unlimited</strong> student licenses</li>
-                  <li><strong>Unlimited</strong> teacher licenses</li>
-                </ul>
-                <button 
-                  type="button" 
-                  class="btn btn-primary w-100"
-                  id="bulk-quote-button">
-                  Request Quote
-                </button>
-              </div>
-            </div>
-            <!-- End Bulk License -->
-
-            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
               <div class="pricing-item" style="border: 3px solid #17a2b8; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);">
                 <div style="text-align: center; margin-bottom: 15px;">
-                  <span style="background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">FREE TRIAL</span>
+                  <span style="background: linear-gradient(45deg, #17a2b8, #138496); color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">TRY FREE</span>
                 </div>
-                <h3>30-Day Free Trial</h3>
+                <h3>Free Trial</h3>
                 <h4><sup>$</sup>0<span> / 30 days</span></h4>
                 <ul>
-                  <li>Full access to all features</li>
-                  <li>Unlimited student licenses</li>
-                  <li>Unlimited teacher licenses</li>
-                  <li>30-day trial period</li>
+                  <li><i class="bi bi-check text-success"></i> Unlimited students</li>
+                  <li><i class="bi bi-check text-success"></i> Unlimited teachers</li>
+                  <li><i class="bi bi-check text-success"></i> Full feature access</li>
+                  <li><i class="bi bi-check text-success"></i> 30-day trial period</li>
+                  <li><i class="bi bi-check text-success"></i> No credit card required</li>
                 </ul>
                 <button 
                   type="button" 
-                  class="btn btn-info w-100"
+                  class="btn btn-info w-100 mt-3"
                   id="free-trial-button">
-                  Start Free Trial
+                  <i class="bi bi-rocket"></i> Start Free Trial
                 </button>
               </div>
             </div>
-            <!-- End Free Trial -->
 
-            <div class="col-12 text-center" data-aos="fade-up" data-aos-delay="300">
+            <!-- Individual Licensing -->
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="200">
               <div class="pricing-item">
-                <h3>Order Summary</h3>
-                <p id="order-summary">
-                  <!-- JS will update this -->
-                  10 Student Licenses ($150) + 1 Teacher License ($60) = <strong>$210</strong>
-                </p>
-                <button 
-                  type="submit" 
-                  class="btn btn-primary"
-                  id="purchase-button"
-                  role="button"
-                  tabindex="0">
-                  Purchase Licenses
-                </button>
-                <div class="mt-4 pt-4 border-top">
-                  <h5 class="fw-bold">
-                    💼 Paying with a Purchase Order?
-                  </h5>
-                  <p>
-                    We’re an approved vendor in multiple Texas school districts.
-                    <br />Click below to request a formal quote or custom
-                    invoice.
-                  </p>
-                  <p class="mt-2"><small>📄 Includes W-9, pricing breakdown, and payment terms.</small></p>
-                  <a href="#contact" id="request-quote-btn" class="btn btn-secondary mt-2" role="button">
-                    Request a Quote
-                  </a>
+                <h3>Individual Licenses</h3>
+                <h4>Pay<span> per user</span></h4>
+                <ul>
+                  <li><i class="bi bi-person"></i> <strong>Students:</strong> $15 each</li>
+                  <li><i class="bi bi-person-check"></i> <strong>Teachers:</strong> $60 each</li>
+                  <li><i class="bi bi-check text-success"></i> Full app access</li>
+                  <li><i class="bi bi-check text-success"></i> Admin dashboard</li>
+                  <li><i class="bi bi-check text-success"></i> Priority support</li>
+                </ul>
+                <div class="mt-3">
+                  <div class="row mb-2">
+                    <div class="col-6">
+                      <label class="form-label small">Students</label>
+                      <input type="number" id="student-qty" class="form-control form-control-sm" min="0" value="25" form="school-license-form">
+                    </div>
+                    <div class="col-6">
+                      <label class="form-label small">Teachers</label>
+                      <input type="number" id="teacher-qty" class="form-control form-control-sm" min="1" value="2" form="school-license-form">
+                    </div>
+                  </div>
+                  <button 
+                    type="submit" 
+                    class="btn btn-primary w-100"
+                    id="purchase-button"
+                    form="school-license-form">
+                    <i class="bi bi-credit-card"></i> Buy Now - <span id="total-price">$435</span>
+                  </button>
                 </div>
               </div>
             </div>
+
+            <!-- School-Wide License -->
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="300">
+              <div class="pricing-item featured">
+                <div class="popular-badge">MOST POPULAR</div>
+                <h3>School-Wide</h3>
+                <h4><sup>$</sup>20,000<span> / year</span></h4>
+                <ul>
+                  <li><i class="bi bi-infinity text-primary"></i> <strong>Unlimited</strong> students</li>
+                  <li><i class="bi bi-infinity text-primary"></i> <strong>Unlimited</strong> teachers</li>
+                  <li><i class="bi bi-check text-success"></i> Priority implementation</li>
+                  <li><i class="bi bi-check text-success"></i> Dedicated support</li>
+                  <li><i class="bi bi-check text-success"></i> Custom training</li>
+                </ul>
+                <button 
+                  type="button" 
+                  class="btn btn-success w-100 mt-3"
+                  id="bulk-quote-button">
+                  <i class="bi bi-building"></i> Get School Quote
+                </button>
+              </div>
+            </div>
+
+            <!-- Purchase Order Option -->
+            <div class="col-xl-3 col-lg-6 col-md-6" data-aos="fade-up" data-aos-delay="400">
+              <div class="pricing-item" style="border: 2px solid #6c757d;">
+                <div style="text-align: center; margin-bottom: 15px;">
+                  <span style="background: #6c757d; color: white; padding: 5px 15px; border-radius: 15px; font-size: 12px; font-weight: bold;">DISTRICTS</span>
+                </div>
+                <h3>Purchase Order</h3>
+                <h4>Custom<span> pricing</span></h4>
+                <ul>
+                  <li><i class="bi bi-file-text"></i> Formal quotes & invoices</li>
+                  <li><i class="bi bi-shield-check"></i> W-9 & tax documents</li>
+                  <li><i class="bi bi-calendar-check"></i> Net 30 payment terms</li>
+                  <li><i class="bi bi-truck"></i> Approved vendor status</li>
+                  <li><i class="bi bi-telephone"></i> Dedicated account rep</li>
+                </ul>
+                <button 
+                  type="button" 
+                  class="btn btn-outline-secondary w-100 mt-3"
+                  id="request-quote-btn">
+                  <i class="bi bi-envelope"></i> Request Quote
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Hidden Form for Individual Purchases -->
+          <form id="school-license-form" style="display: none;">
+            <input type="hidden" name="student_qty" id="student-qty-hidden">
+            <input type="hidden" name="teacher_qty" id="teacher-qty-hidden">
           </form>
+
+          <!-- Additional Information -->
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+              <div class="alert alert-info">
+                <h5><i class="bi bi-lightbulb"></i> Not sure which option is right for you?</h5>
+                <p class="mb-2">Start with our <strong>free 30-day trial</strong> to explore all features, then choose the plan that fits your school's needs.</p>
+                <small class="text-muted">All plans include the same core features - only pricing and support levels differ.</small>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
       
